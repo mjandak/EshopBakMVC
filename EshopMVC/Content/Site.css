@@ -1,0 +1,42 @@
+﻿/*html5 semantics tags */
+article, aside, figure, footer, header, hgroup, menu, nav, section 
+{ display: block; }
+
+/* light css reset */
+* { margin : 0; padding : 0; }
+h2, h3, h4, h5, p, ul, ol  { margin : 0 20px; padding : .5em 0; }
+img { border: 0px;}
+
+/* =page level container */
+#pageContainer {
+    margin: 0px auto 0px auto;
+	width: 960px;
+}
+
+#pageHeader {
+    margin:0px auto 0px auto;
+    width:960px;
+    height:82px;
+}
+
+#contentContainer {
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    min-height: 500px;
+}
+
+#contentContainer > nav, section, aside {
+    display: inline-block;
+}
+
+#pageFooter {
+    margin: 0px auto;
+    padding-bottom: 20px;
+	width: 960px;
+	position: relative;
+}
+
+.border {
+    border: 1px solid black;
+}

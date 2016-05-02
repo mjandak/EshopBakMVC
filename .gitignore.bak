@@ -50,4 +50,3 @@ bin/
 obj/
 packages/
 *.suo
-*.csproj.user

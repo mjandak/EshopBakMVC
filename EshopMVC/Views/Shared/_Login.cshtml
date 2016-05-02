@@ -1,0 +1,52 @@
+﻿@model EshopMVC.Models.Members.LoginViewModel
+<div id="loginContainer">
+    @using (Ajax.BeginForm("Login", "Members", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "loginContainer" }))
+    //using (Html.BeginForm("Login", "Users", new { ReturnUrl = Request.Url.PathAndQuery }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <table style="width: 100%; border-collapse: collapse;">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="CategoriesTable">
+                            <tbody>
+                                <tr>
+                                    <td class="CategoriesTableTitle" colspan="2">Přihlášení</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    @Html.LabelFor(model => model.UserName)
+                                    @*<label id="LoginView1_Login1_UserNameLabel" for="LoginView1_Login1_UserName">Přihlašovací jméno:</label></td>*@
+                                    <td>
+                                        @Html.TextBoxFor(m => m.UserName)
+                                        @*<input type="text" style="width: 100px;" id="LoginView1_Login1_UserName" name="ctl00$LoginView1$Login1$UserName">*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    @Html.LabelFor(model => model.Password)
+                                    @*<label id="LoginView1_Login1_PasswordLabel" for="LoginView1_Login1_Password">Heslo:</label></td>*@
+                                    <td>
+                                        @Html.PasswordFor(m => m.Password)
+                                        @*<input type="password" style="width: 100px;" id="LoginView1_Login1_Password" name="ctl00$LoginView1$Login1$Password">*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="color: red" colspan="2">
+                                        @Html.ValidationSummary()
+                                        @*@{Html.RenderAction("Login", "Users");}*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <input type="submit" value="Přihlásit">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>

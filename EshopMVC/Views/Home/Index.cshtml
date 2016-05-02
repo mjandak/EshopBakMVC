@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Products catalog";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.ActionLink("Add to cart", "Add", "Cart", new { id = 1 }, null)

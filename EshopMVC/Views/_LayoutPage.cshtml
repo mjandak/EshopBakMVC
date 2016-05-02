@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+</head>
+<body>
+    <div>
+        <header id="pageHeader"></header>
+        <div id="contentContainer" class="">
+            <nav id="pageNav">
+                CtgrNav
+            </nav>
+
+            <section id="pageSection">
+                @RenderBody()
+            </section>
+
+            <aside id="pageAside">
+                @if (Request.IsAuthenticated)
+                {
+                    ViewBag.UserNamme = User.Identity.Name;
+                    Html.RenderPartial("_LoggedIn");
+                }
+                else
+                {
+                    Html.RenderPartial("_Login");
+                }
+                <div>
+                    @Html.ActionLink("Register", "Register", "Members")
+                </div>
+            </aside>
+        </div>
+        <footer id="pageFooter">Miroslav Jandak 2016</footer>
+    </div>
+</body>
+</html>

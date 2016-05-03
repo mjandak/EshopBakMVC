@@ -145,10 +145,18 @@
     </Content>
     <None Include="Properties\PublishProfiles\EshopBakMVC.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Images\android_large.jpg" />
     <Content Include="Images\android_small.jpg" />
+    <Content Include="Images\image.jpg" />
     <Content Include="Images\image2.jpg" />
+    <Content Include="Images\image3.jpg" />
+    <Content Include="Images\image4.jpg" />
+    <Content Include="Images\image_large.jpg" />
+    <Content Include="Images\ipad_large.jpg" />
     <Content Include="Images\ipad_small.jpg" />
+    <Content Include="Images\lcdtv_large.jpg" />
     <Content Include="Images\lcdtv_small.jpg" />
+    <Content Include="Images\notebook_large.jpg" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

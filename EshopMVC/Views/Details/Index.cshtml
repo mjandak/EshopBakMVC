@@ -1,0 +1,131 @@
+﻿@model EshopMVC.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+@*<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.small_image_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.small_image_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.large_image_url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.large_image_url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.producer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.producer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.special)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.special)
+        </dd>
+
+    </dl>
+</div>*@
+
+
+<table>
+    <tbody>
+        <tr>
+            <td colspan="3" align="center">
+                <b>
+                    @Model.title
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 400px; height: 400px; text-align: center; vertical-align: central">
+                <img id="ContentPlaceHolder1_imgProduct" src="@Url.Content(Model.large_image_url)" alt="Náhled není k dispozici." style="height:400px;width:400px;">
+            </td>
+            <td style="vertical-align:top">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="width:80px">price:</td>
+                            <td>
+                                @Model.price.ToString("C")
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>manufacturer:</td>
+                            <td>
+                                @Model.producer
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>code:</td>
+                            <td>
+                                @Model.id
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: justify">
+                @Model.description
+                @*Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*@
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center" class="blackBorder brownBck">
+                @using (Ajax.BeginForm("Add", "Cart",
+                    new { id = Model.id, title = Model.title, price = Model.price },
+                    new AjaxOptions() { HttpMethod = "Get", OnComplete = "ShowAddedToCartMsg();" }
+                    ))
+                {
+                    <span>Quantity: </span>
+                    <input name="quantity" type="number" size="1" id="quantity" />
+                    <input type="submit" value="Add to cart" />
+                }
+                
+            </td>
+        </tr>
+    </tbody>
+</table>

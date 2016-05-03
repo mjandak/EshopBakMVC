@@ -34,7 +34,7 @@
     <tr>
         <td colspan="3"><b>total</b></td>
         <td style="text-align: right">
-            <b>@String.Format("{0:C}", Model.Sum(i => i.Price))</b>
+            <b>@String.Format("{0:C}", Model.Sum(i => i.Price*i.Quantity))</b>
         </td>
     </tr>
     <tr>

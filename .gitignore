@@ -51,6 +51,6 @@ obj/
 packages/
 *.suo
 *.csproj.user
-*pubxml
-*pubxml.user
+*.pubxml
+*.pubxml.user
 

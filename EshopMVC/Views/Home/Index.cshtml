@@ -40,7 +40,7 @@
                                     OnComplete = "ShowAddedToCartMsg();"
                                 })
                             <br/>
-                            Details
+                            @Html.ActionLink("Details", "Index", "Details", new {Id = product.id}, null)
                         </div>
                     </td>
                 }
@@ -51,13 +51,13 @@
     }
     <tr class="pager">
         <td>
-            @Html.ActionLink("<<<", "Index", "Home", new { PageStart = ViewBag.Prev }, null)
+            @Html.ActionLink("<<<", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Prev }, null)
         </td>
         <td colspan="@(NumberOfColumns - 2)">
             @*TODO: count*@
         </td>
         <td style="text-align: right">
-            @Html.ActionLink(">>>", "Index", "Home", new { PageStart = ViewBag.Next }, null)
+            @Html.ActionLink(">>>", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Next }, null)
         </td>
     </tr>
 </table>

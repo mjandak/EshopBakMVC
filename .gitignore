@@ -49,11 +49,9 @@ Temporary Items
 bin/
 obj/
 packages/
-PublishProfiles/
 *.suo
 *.csproj.user
-*.pubxml
-*.pubxml.user
 
 EshopMVC/ConnectionStrings.config
 EshopMVC/Properties/PublishProfiles/EshopBakMVC.pubxml.user
+EshopMVC/Properties/PublishProfiles/EshopBakMVC.pubxml

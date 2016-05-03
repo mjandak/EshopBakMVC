@@ -1,0 +1,22 @@
+﻿@model IEnumerable<EshopMVC.Models.CategoryViewModel>
+
+<ul id="categoriesTree">
+    @foreach (var cat in Model)
+    {
+        <li>
+            @if (cat.Children == null || cat.Children.Count() == 0)
+            {
+                <span>@Html.ActionLink(cat.Name, "Index", "Home", new { CatId = cat.Id }, null)</span>
+            }
+            else
+            {
+                <span>
+                    @Html.ActionLink(cat.Name, "Index", "Home", new { CatId = cat.Id }, null)
+                </span>
+                <ul>
+                    @Html.Partial("_Tree", cat.Children)
+                </ul>
+            }
+        </li>
+    }
+</ul>

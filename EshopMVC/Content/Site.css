@@ -1,42 +1,98 @@
-﻿/*html5 semantics tags */
-article, aside, figure, footer, header, hgroup, menu, nav, section 
-{ display: block; }
+﻿body {
+    font-family:Verdana;
+    font-size:0.8em;
+}
+
+/*html5 semantics tags */
+article, aside, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
 
 /* light css reset */
-* { margin : 0; padding : 0; }
-h2, h3, h4, h5, p, ul, ol  { margin : 0 20px; padding : .5em 0; }
-img { border: 0px;}
+/** {
+    margin: 0;
+    padding: 0;
+}*/
+/*h2, h3, h4, h5, p, ul, ol  { margin : 0 20px; padding : .5em 0; }*/
+img {
+    border: 0px;
+}
 
 /* =page level container */
 #pageContainer {
     margin: 0px auto 0px auto;
-	width: 960px;
+    width: 1200px;
 }
 
 #pageHeader {
-    margin:0px auto 0px auto;
-    width:960px;
-    height:82px;
+    margin-bottom: 10px;
+    /*width:960px;*/
+    height: 82px;
 }
 
 #contentContainer {
     margin: 0px;
-    padding-top: 10px;
-    padding-bottom: 20px;
+    /*padding-top: 10px;*/
+    /*padding-bottom: 20px;*/
     min-height: 500px;
 }
 
-#contentContainer > nav, section, aside {
-    display: inline-block;
-}
+    #contentContainer > nav, section, aside {
+        display: inline-block;
+        vertical-align: top;
+        /*float:left;*/
+    }
 
 #pageFooter {
-    margin: 0px auto;
-    padding-bottom: 20px;
-	width: 960px;
-	position: relative;
+    margin-top: 10px;
+    height: 100px;
+    /*padding-bottom: 20px;*/
+    /*width: 960px;*/
+    /*position: relative;*/
 }
 
-.border {
+#pageNav {
+    width: 260px;
+}
+
+#pageSection {
+    width: 600px;
+}
+
+#pageAside {
+    width: 300px;
+}
+
+#catalogTable {
+    border-collapse: collapse;
+}
+
+    #catalogTable td {
+        border: 1px solid black;
+        width:166px;
+        padding:3px;
+    }
+
+    #catalogTable .productTitle {
+        height: 32px;
+        font-weight: bold;
+    }
+
+    #catalogTable .imgContainer {
+        height: 120px;
+    }
+
+#pageNav ul {
+    list-style-type: none;
+    margin-left:10px;
+    padding-left:0;
+}
+
+
+.blackBorder {
     border: 1px solid black;
+}
+
+.brownBck {
+    background-color: #eee8aa;
 }

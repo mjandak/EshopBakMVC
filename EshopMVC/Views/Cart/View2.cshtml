@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EshopMVC.CartItem>
+
+@{
+    ViewBag.Title = "View1";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<h2>View1</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ShoppingCart</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserId)
+                @Html.ValidationMessageFor(model => model.UserId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+    <table class="GenericTable">
+        <tbody>
+            <tr>
+                <td><b>kód</b></td>
+                <td><b>název</b></td>
+                <td><b>množství</b></td>
+                <td><b>cena</b></td>
+            </tr>
+
+            @foreach (CartItem item in Model)
+            {
+            <tr>
+                <td>
+                    <a href="productdetail.aspx?id=3" id="ContentPlaceHolder1_repCart_litProductId_0">3</a>
+                </td>
+                <td>@item.Title</td>
+                <td class="ShoppingCartTable">
+                    @{Html.EditorFor(i => i
+                    <input type="text" id="ContentPlaceHolder1_repCart_txtProductQuantity_0" size="7" value="1" 
+                        name="ctl00$ContentPlaceHolder1$repCart$ctl01$txtProductQuantity">
+                    &nbsp;
+                    &nbsp;
+                </td>
+                <td style="text-align: right">9&nbsp;490,00
+                </td>
+            </tr>                
+            }
+
+
+            <tr>
+                <td colspan="3"><b>celková cena</b></td>
+                <td style="text-align: right">
+                    <b>26&nbsp;845,00
+                    </b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="submit" id="ContentPlaceHolder1_repCart_btnSaveChanges" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" value="Uložit změny" name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges"></td>
+                <td>
+                    <input type="submit" id="ContentPlaceHolder1_repCart_btnEmptyCart" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$repCart$ctl03$btnEmptyCart&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" value="Vysypat košík" name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnEmptyCart"></td>
+            </tr>
+        </tbody>
+
+    </table>
+    
+    
+    
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

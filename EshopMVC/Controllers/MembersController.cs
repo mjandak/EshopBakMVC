@@ -92,6 +92,27 @@ namespace EshopMVC.Controllers
                     SignInAsync(user, false);
                     //RedirectToAction("Home", "Index");
                     //return RedirectToLocal(returnUrl);
+
+                    var sessionCart = (ShoppingCart)Session["Cart"];
+                    if (sessionCart != null)
+                    {
+                        using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                        {
+                            var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                            if (dbCart == null)
+                            {
+                                dbCtx.ShoppingCart.Add(sessionCart);
+                                dbCtx.SaveChanges();
+                            }
+                            else
+                            {
+                                dbCart.CartItem = sessionCart.CartItem; //TODO: merge carts
+                                dbCtx.SaveChanges();
+                            }
+                        }
+                    }
+                    Session.Remove("Cart");
+
                     return PartialView("_LoggedIn");
                 }
                 else

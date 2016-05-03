@@ -9,7 +9,7 @@ namespace EshopMVC.Models
         public string Street { get; set; }
         public string City { get; set; }
         public string ZipCode { get; set; }
-        public ShoppingCart Cart { get; set; }
+        //public ShoppingCart Cart { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

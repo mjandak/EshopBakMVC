@@ -1,27 +1,56 @@
-﻿@model EshopMVC.Models.ShoppingCart
+﻿@model IEnumerable<EshopMVC.CartItem>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "View1";
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>Index</h2>
+<table class="table">
+    <tr>
+        <td><b>code</b></td>
+        <td><b>name</b></td>
+        <td><b>quantity</b></td>
+        <td><b>price</b></td>
+    </tr>
 
-<div>
-    <h4>ShoppingCart</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => item.Quantity)
+            </td>
+            <td style="text-align:right">
+                @String.Format("{0:C}", item.Price)
+            </td>
+        </tr>
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
+    <tr>
+        <td colspan="3"><b>total</b></td>
+        <td style="text-align: right">
+            <b>@String.Format("{0:C}", Model.Sum(i => i.Price))</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            @*TODO*@
+            @*<input type="submit" id="ContentPlaceHolder1_repCart_btnSaveChanges" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" value="Uložit změny" name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges"></td>*@
+        <td>
+            @*<input  type="submit" id="ContentPlaceHolder1_repCart_btnEmptyCart" 
+                value="Empty cart"
+                name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnEmptyCart">*@
+            
+            @*<input type="button" value="Empty cart" onclick="location.href='@(Url.Action("Empty", "Cart"))'">*@
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+            @Html.ActionLink("Empty cart", "Empty", "Cart")
+
+        </td>
+    </tr>
+
+</table>

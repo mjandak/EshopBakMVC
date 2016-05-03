@@ -3,6 +3,53 @@
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+@model EshopMVC.Models.CategoryBrowserViewModel
 
-@Html.ActionLink("Add to cart", "Add", "Cart", new { id = 1 }, null)
+<table id="catalogTable">
+@{
+        const int NumberOfColumns = 3; 
+        int skip = 0;
+        var products = Model.Products.Skip(skip).Take(NumberOfColumns);
+        while (products.Count() > 0)
+        {
+            <tr>
+                @foreach (EshopMVC.Product product in products)
+                {
+                    <td>
+                        <div class="productTitle">@product.title</div>
+                        <br />
+                        <div class="imgContainer">
+                            @if (string.IsNullOrWhiteSpace(product.small_image_url))
+                            {
+                                <span>Picture not available.</span>
+                        }
+                            else
+                            {
+                                <img src="@Url.Content(product.small_image_url)" />
+                        }
+                        </div>
+                        <br />
+                        @product.price
+                        <br />
+                        <div class="brownBck blackBorder">
+                            @Ajax.ActionLink("Add to cart", "Add", "Cart", 
+                            new { id = product.id, title = product.title, price = product.price, quantity = 1}, 
+                            new AjaxOptions { 
+                                HttpMethod = "GET", 
+                                OnComplete = "ShowAddedToCartMsg();"
+                            })
+                            <br />
+                            Details
+                        </div>
+                    </td>
+                }
+            </tr>
+            skip += NumberOfColumns;
+            products = Model.Products.Skip(skip).Take(NumberOfColumns);
+        }
+    }
+</table>
+
+@section Tree {
+    @Html.Partial("_Tree", Model.Categories)
+}

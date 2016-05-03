@@ -11,163 +11,163 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>05/03/2016 11:56:59</publishTime>
+      <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
-      <publishTime>05/03/2016 11:56:59</publishTime>
+      <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/EshopMVC.dll">
-      <publishTime>05/03/2016 11:57:07</publishTime>
+      <publishTime>03/05/2016 11:57:07</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
-      <publishTime>05/03/2016 11:56:59</publishTime>
+      <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.EntityFramework.dll">
-      <publishTime>05/03/2016 11:56:59</publishTime>
+      <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Owin.dll">
-      <publishTime>05/03/2016 11:56:59</publishTime>
+      <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>05/03/2016 11:57:03</publishTime>
+      <publishTime>03/05/2016 11:57:03</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
-      <publishTime>05/03/2016 11:57:03</publishTime>
+      <publishTime>03/05/2016 11:57:03</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.Cookies.dll">
-      <publishTime>05/03/2016 11:57:05</publishTime>
+      <publishTime>03/05/2016 11:57:05</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
-      <publishTime>05/03/2016 11:57:04</publishTime>
+      <publishTime>03/05/2016 11:57:04</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.OAuth.dll">
-      <publishTime>05/03/2016 11:57:06</publishTime>
+      <publishTime>03/05/2016 11:57:06</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>05/03/2016 11:57:06</publishTime>
+      <publishTime>03/05/2016 11:57:06</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>05/03/2016 11:57:06</publishTime>
+      <publishTime>03/05/2016 11:57:06</publishTime>
     </File>
     <File Include="bin/Owin.dll">
-      <publishTime>05/03/2016 11:57:06</publishTime>
+      <publishTime>03/05/2016 11:57:06</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>05/03/2016 11:57:02</publishTime>
+      <publishTime>03/05/2016 11:57:02</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>05/03/2016 11:57:00</publishTime>
+      <publishTime>03/05/2016 11:57:00</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>05/03/2016 11:57:01</publishTime>
+      <publishTime>03/05/2016 11:57:01</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.Deployment.dll">
-      <publishTime>05/03/2016 11:57:02</publishTime>
+      <publishTime>03/05/2016 11:57:02</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.dll">
-      <publishTime>05/03/2016 11:57:02</publishTime>
+      <publishTime>03/05/2016 11:57:02</publishTime>
     </File>
     <File Include="bin/System.Web.Webpages.Razor.dll">
-      <publishTime>05/03/2016 11:57:02</publishTime>
+      <publishTime>03/05/2016 11:57:02</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>05/03/2016 13:24:40</publishTime>
     </File>
     <File Include="db/category insert.sql">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="db/db.sql">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="db/product insert.sql">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="EntityModel.edmx.diagram">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Global.asax">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Images/android_small.jpg">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Images/image2.jpg">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Images/ipad_small.jpg">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Images/lcdtv_small.jpg">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.map">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.unobtrusive-ajax.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Scripts/Site.js">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Cart/Empty.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Cart/Index.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Cart/View2.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Home/_Tree.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Members/Register.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Members/RegisterSuccess.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Shared/_LoggedIn.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Shared/_Login.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>05/03/2016 13:23:28</publishTime>
     </File>
     <File Include="Views/web.config">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/_LayoutPage.cshtml">
-      <publishTime>05/03/2016 11:47:16</publishTime>
+      <publishTime>05/03/2016 13:27:56</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/03/2016 11:57:12</publishTime>
+      <publishTime>03/05/2016 11:57:12</publishTime>
     </File>
   </ItemGroup>
 </Project>

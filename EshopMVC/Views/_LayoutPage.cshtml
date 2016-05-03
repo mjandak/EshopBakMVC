@@ -39,8 +39,11 @@
                 <br />
                 <div class="brownBck blackBorder">
                     @Html.ActionLink("Catalog", "Index", "Home")<br />
-                    @Html.ActionLink("Cart", "Index", "Cart")<br />
-                    @Html.ActionLink("Sign up", "Register", "Members")
+                    @Html.ActionLink("Cart", "Index", "Cart")<br/>
+                    @if (!Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("Sign up", "Register", "Members")
+                    }
                 </div>
             </aside>
         </div>

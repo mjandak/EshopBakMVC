@@ -17,7 +17,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2016 11:56:59</publishTime>
     </File>
     <File Include="bin/EshopMVC.dll">
-      <publishTime>03/05/2016 11:57:07</publishTime>
+      <publishTime>05/03/2016 16:37:52</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.Identity.Core.dll">
       <publishTime>03/05/2016 11:56:59</publishTime>
@@ -88,17 +88,41 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
+    <File Include="Images/android_large.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
     <File Include="Images/android_small.jpg">
       <publishTime>03/05/2016 11:47:16</publishTime>
+    </File>
+    <File Include="Images/image.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
     </File>
     <File Include="Images/image2.jpg">
       <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
+    <File Include="Images/image3.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
+    <File Include="Images/image4.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
+    <File Include="Images/image_large.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
+    <File Include="Images/ipad_large.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
     <File Include="Images/ipad_small.jpg">
       <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
+    <File Include="Images/lcdtv_large.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
+    </File>
     <File Include="Images/lcdtv_small.jpg">
       <publishTime>03/05/2016 11:47:16</publishTime>
+    </File>
+    <File Include="Images/notebook_large.jpg">
+      <publishTime>05/03/2016 11:08:08</publishTime>
     </File>
     <File Include="packages.config">
       <publishTime>03/05/2016 11:47:16</publishTime>
@@ -137,13 +161,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
     <File Include="Views/Cart/Index.cshtml">
-      <publishTime>03/05/2016 11:47:16</publishTime>
+      <publishTime>03/05/2016 16:20:46</publishTime>
     </File>
     <File Include="Views/Cart/View2.cshtml">
       <publishTime>03/05/2016 11:47:16</publishTime>
     </File>
+    <File Include="Views/Details/Index.cshtml">
+      <publishTime>03/05/2016 16:28:34</publishTime>
+    </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>05/03/2016 14:13:30</publishTime>
+      <publishTime>03/05/2016 14:39:06</publishTime>
     </File>
     <File Include="Views/Home/_Tree.cshtml">
       <publishTime>03/05/2016 11:47:16</publishTime>

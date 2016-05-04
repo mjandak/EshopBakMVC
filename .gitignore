@@ -52,6 +52,5 @@ packages/
 *.suo
 *.csproj.user
 
-EshopMVC/ConnectionStrings.config
-EshopMVC/Properties/PublishProfiles/EshopBakMVC.pubxml.user
-EshopMVC/Properties/PublishProfiles/EshopBakMVC.pubxml
+ConnectionStrings.config
+PublishProfiles/

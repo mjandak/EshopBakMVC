@@ -127,6 +127,9 @@ namespace EshopMVC.Controllers
 
         private void SignInAsync(ApplicationUser user, bool isPersistent)
         {
+            //The key methods are SignIn() and SignOut() on the AuthenticationManager, which create or delete the application cookies on the executing request. 
+            //SignIn() takes an Identity object that includes any claims you have assigned to it. 
+            //This identity is what you also get back once the user is logged in and you look at Context.User.Identity later to check for authorization.
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace EshopMVC
@@ -10,6 +11,10 @@ namespace EshopMVC
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
         }
     }
 }

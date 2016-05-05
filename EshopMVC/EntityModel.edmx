@@ -4,33 +4,14 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EntityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="EntityModelStoreContainer">
-          <EntitySet Name="CartItem" EntityType="EntityModel.Store.CartItem" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Category" EntityType="EntityModel.Store.Category" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Product" EntityType="EntityModel.Store.Product" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductCategory" EntityType="EntityModel.Store.ProductCategory" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ShoppingCart" EntityType="EntityModel.Store.ShoppingCart" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_CartItem_ShoppingCart" Association="EntityModel.Store.FK_CartItem_ShoppingCart">
-            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
-            <End Role="CartItem" EntitySet="CartItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductCategory_Category" Association="EntityModel.Store.FK_ProductCategory_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductCategory_Product" Association="EntityModel.Store.FK_ProductCategory_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CartItem">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="Price" Type="decimal" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="CartId" Type="int" Nullable="false" />
         </EntityType>
@@ -39,20 +20,38 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="title" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="parent_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderProduct">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="price" Type="decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="small_image_url" Type="nvarchar" MaxLength="50" />
           <Property Name="large_image_url" Type="nvarchar" MaxLength="50" />
           <Property Name="description" Type="ntext" />
-          <Property Name="producer" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="producer" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="special" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductCategory">
@@ -67,12 +66,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <Association Name="FK_CartItem_ShoppingCart">
-          <End Role="ShoppingCart" Type="EntityModel.Store.ShoppingCart" Multiplicity="1" />
-          <End Role="CartItem" Type="EntityModel.Store.CartItem" Multiplicity="*" />
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShoppingCart">
               <PropertyRef Name="Id" />
@@ -82,9 +81,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderProduct_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderProduct" Type="Self.OrderProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderProduct">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderProduct" Type="Self.OrderProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductCategory_Category">
-          <End Role="Category" Type="EntityModel.Store.Category" Multiplicity="1" />
-          <End Role="ProductCategory" Type="EntityModel.Store.ProductCategory" Multiplicity="*" />
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="id" />
@@ -95,8 +118,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductCategory_Product">
-          <End Role="Product" Type="EntityModel.Store.Product" Multiplicity="1" />
-          <End Role="ProductCategory" Type="EntityModel.Store.ProductCategory" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="id" />
@@ -106,6 +129,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="EntityModelStoreContainer">
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderProduct" EntityType="Self.OrderProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CartItem_ShoppingCart" Association="Self.FK_CartItem_ShoppingCart">
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderProduct_Order" Association="Self.FK_OrderProduct_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderProduct_Product" Association="Self.FK_OrderProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Product" Association="Self.FK_ProductCategory_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -122,6 +174,16 @@
           <AssociationSet Name="ProductCategory" Association="EntityModel.ProductCategory">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="Order" EntityType="EntityModel.Order" />
+          <EntitySet Name="OrderProduct" EntityType="EntityModel.OrderProduct" />
+          <AssociationSet Name="FK_OrderProduct_Order" Association="EntityModel.FK_OrderProduct_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderProduct_Product" Association="EntityModel.FK_OrderProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CartItem">
@@ -168,6 +230,7 @@
           <Property Type="String" Name="producer" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="special" Nullable="false" />
           <NavigationProperty Name="Category" Relationship="EntityModel.ProductCategory" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="OrderProduct" Relationship="EntityModel.FK_OrderProduct_Product" FromRole="Product" ToRole="OrderProduct" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -181,6 +244,51 @@
         <Association Name="ProductCategory">
           <End Type="EntityModel.Category" Role="Category" Multiplicity="*" />
           <End Type="EntityModel.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderProduct" Relationship="EntityModel.FK_OrderProduct_Order" FromRole="Order" ToRole="OrderProduct" />
+        </EntityType>
+        <EntityType Name="OrderProduct">
+          <Key>
+            <PropertyRef Name="OrderId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="EntityModel.FK_OrderProduct_Order" FromRole="OrderProduct" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="EntityModel.FK_OrderProduct_Product" FromRole="OrderProduct" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_OrderProduct_Order">
+          <End Type="EntityModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="EntityModel.OrderProduct" Role="OrderProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderProduct">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderProduct_Product">
+          <End Type="EntityModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="EntityModel.OrderProduct" Role="OrderProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -238,6 +346,25 @@
               <ScalarProperty Name="id" ColumnName="category_id" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="EntityModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderProduct">
+            <EntityTypeMapping TypeName="EntityModel.OrderProduct">
+              <MappingFragment StoreEntitySet="OrderProduct">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -255,6 +382,7 @@
         <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

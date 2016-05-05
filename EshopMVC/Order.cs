@@ -12,24 +12,18 @@ namespace EshopMVC
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Order
     {
-        public Product()
+        public Order()
         {
-            this.Category = new HashSet<Category>();
             this.OrderProduct = new HashSet<OrderProduct>();
         }
     
-        public int id { get; set; }
-        public string title { get; set; }
-        public decimal price { get; set; }
-        public string small_image_url { get; set; }
-        public string large_image_url { get; set; }
-        public string description { get; set; }
-        public string producer { get; set; }
-        public bool special { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public string State { get; set; }
     
-        public virtual ICollection<Category> Category { get; set; }
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

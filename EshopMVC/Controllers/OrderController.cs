@@ -46,10 +46,10 @@ namespace EshopMVC.Controllers
             ApplicationUser user = UserManager.FindByName(User.Identity.Name);
             using (var db = new DB_9FCCB1_eshopEntities())
             {
-                var orders = db.Order.Where(o => o.UserId == user.Id);
+                var orders = db.Order.Where(o => o.UserId == user.Id).ToArray();
                 var model = orders.Select(o =>
-                    new OrderSummaryViewModel(o));
-                return View(model.ToArray());
+                    new OrderSummaryViewModel(o)).ToArray();
+                return View(model);
             }
         }
     }

@@ -12,39 +12,39 @@
         var products = Model.Products.Skip(skip).Take(NumberOfColumns);
         while (products.Any())
         {
-            <tr>
-                @foreach (Product product in products)
-                {
-                    <td>
-                        <div class="productTitle">@product.title</div>
-                        <br/>
-                        <div class="imgContainer">
-                            @if (string.IsNullOrWhiteSpace(product.small_image_url))
-                            {
-                                <span>Picture not available.</span>
-                            }
-                            else
-                            {
-                                <img src="@Url.Content(product.small_image_url)"/>
-                            }
-                        </div>
-                        <br/>
-                        @product.price
-                        <br/>
-                        <div class="brownBck blackBorder">
-                            @Ajax.ActionLink("Add to cart", "Add", "Cart",
-                                new {id = product.id, title = product.title, price = product.price, quantity = 1},
+        <tr>
+            @foreach (Product product in products)
+            {
+                <td>
+                    <div class="productTitle">@product.title</div>
+                    <br />
+                    <div class="imgContainer">
+                        @if (string.IsNullOrWhiteSpace(product.small_image_url))
+                        {
+                            <span>Picture not available.</span>
+                        }
+                        else
+                        {
+                            <img src="@Url.Content(product.small_image_url)"/>
+                        }
+                    </div>
+                    <br />
+                    @product.price.ToString("C")
+                    <br />
+                    <div class="brownBck blackBorder">
+                        @Ajax.ActionLink("Add to cart", "Add", "Cart",
+                                new { id = product.id, title = product.title, price = product.price, quantity = 1 },
                                 new AjaxOptions
                                 {
                                     HttpMethod = "GET",
                                     OnComplete = "ShowAddedToCartMsg();"
                                 })
-                            <br/>
-                            @Html.ActionLink("Details", "Index", "Details", new {Id = product.id}, null)
-                        </div>
-                    </td>
-                }
-            </tr>
+                        <br />
+                        @Html.ActionLink("Details", "Index", "Details", new { Id = product.id }, null)
+                    </div>
+                </td>
+            }
+        </tr>
             skip += NumberOfColumns;
             products = Model.Products.Skip(skip).Take(NumberOfColumns);
         }
@@ -65,5 +65,8 @@
 
 
 @section Tree {
-    @Html.Partial("_Tree", Model.Categories)
+    <div class="blackBorder brownBck">
+        <div><b>Categories</b></div>
+        @Html.Partial("_Tree", Model.Categories)
+    </div>
 }

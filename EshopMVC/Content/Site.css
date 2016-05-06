@@ -66,6 +66,7 @@ img {
 
 #catalogTable {
     border-collapse: collapse;
+    margin: 0 auto;
 }
 
     #catalogTable td {
@@ -93,11 +94,20 @@ img {
     padding-left:0;
 }
 
-
 .blackBorder {
     border: 1px solid black;
 }
 
 .brownBck {
     background-color: #eee8aa;
+}
+
+.ordersTable {
+    border-collapse:collapse;
+}
+
+.ordersTable td, th {
+    border: 1px solid black;
+    background-color: #eee8aa;
+    padding:5px;
 }

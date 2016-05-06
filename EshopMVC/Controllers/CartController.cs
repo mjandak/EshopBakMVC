@@ -1,4 +1,5 @@
 ﻿using EshopMVC.Models;
+using EshopMVC.Models.Cart;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -9,17 +10,8 @@ using System.Web.Mvc;
 
 namespace EshopMVC.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
-        public CartController()
-        {
-            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-        }
-
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-
-        //
-        // GET: /Cart/
         public ActionResult Index()
         {
             ShoppingCart cart;
@@ -40,7 +32,10 @@ namespace EshopMVC.Controllers
                 {
                     return View("Empty");
                 }
-                return View(cart.CartItem);
+
+                var model = new CartViewModel(cart);
+
+                return View(model);
             }
         }
 

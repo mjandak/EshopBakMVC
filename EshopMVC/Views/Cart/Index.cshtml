@@ -1,19 +1,23 @@
-﻿@model IEnumerable<EshopMVC.CartItem>
+﻿@*@model IEnumerable<EshopMVC.CartItem>*@
+@model EshopMVC.Models.Cart.CartViewModel
 
 @{
     ViewBag.Title = "View1";
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
-<table class="table">
-    <tr>
-        <td><b>code</b></td>
-        <td><b>name</b></td>
-        <td><b>quantity</b></td>
-        <td><b>price</b></td>
-    </tr>
+@using (Html.BeginForm("Create", "Order", FormMethod.Post))
+{
 
-    @foreach (var item in Model)
+    <table class="table">
+        <tr>
+            <td><b>code</b></td>
+            <td><b>name</b></td>
+            <td><b>quantity</b></td>
+            <td><b>price</b></td>
+        </tr>
+
+        @*@foreach (var item in Model)
     {
         <tr>
             <td>
@@ -29,28 +33,63 @@
                 @String.Format("{0:C}", item.Price)
             </td>
         </tr>
+    }*@
+        @{
+    var items = Model.Items;
+    for (int i = 0; i < items.Count(); i++)
+    {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].ProductId)
+                    @Html.HiddenFor(modelItem => items[i].ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].Title)
+                </td>
+                <td>
+                    @*<input type="number" value="@item.Quantity" name="Quantity" />*@
+                    @Html.DisplayFor(modelItem => items[i].Quantity)
+                </td>
+                <td style="text-align: right">
+                    @*@String.Format("{0:C}", items[i].Price)*@
+                    @Html.TextBoxFor(modelItem => items[i].Price)
+                </td>
+            </tr>
     }
+        }
 
-    <tr>
-        <td colspan="3"><b>total</b></td>
-        <td style="text-align: right">
-            <b>@String.Format("{0:C}", Model.Sum(i => i.Price*i.Quantity))</b>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3">
+        <tr>
+            <td colspan="3"><b>total</b></td>
+            <td style="text-align: right">
+                @*<b>@String.Format("{0:C}", Model.Sum(i => i.Price*i.Quantity))</b>*@
+                <b>@String.Format("{0:C}", Model.Total)</b>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3">
             @*TODO*@
             @*<input type="submit" id="ContentPlaceHolder1_repCart_btnSaveChanges" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" value="Uložit změny" name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges"></td>*@
-        <td>
-            @*<input  type="submit" id="ContentPlaceHolder1_repCart_btnEmptyCart" 
+            <td>
+                @*<input  type="submit" id="ContentPlaceHolder1_repCart_btnEmptyCart" 
                 value="Empty cart"
                 name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnEmptyCart">*@
-            
-            @*<input type="button" value="Empty cart" onclick="location.href='@(Url.Action("Empty", "Cart"))'">*@
 
-            @Html.ActionLink("Empty cart", "Empty", "Cart")
+                @*<input type="button" value="Empty cart" onclick="location.href='@(Url.Action("Empty", "Cart"))'">*@
 
-        </td>
-    </tr>
+                @Html.ActionLink("Empty cart", "Empty", "Cart")
 
-</table>
+            </td>
+        </tr>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <tr>
+                <td colspan="4">
+                    <input type="submit" value="Create order" />
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}

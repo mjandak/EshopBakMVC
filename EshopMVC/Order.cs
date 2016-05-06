@@ -21,7 +21,7 @@ namespace EshopMVC
     
         public int Id { get; set; }
         public string UserId { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public System.DateTime CreateDate { get; set; }
         public string State { get; set; }
     
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }

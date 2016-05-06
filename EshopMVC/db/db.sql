@@ -29,8 +29,8 @@ CREATE TABLE [dbo].[ProductCategory]
 CREATE TABLE [dbo].[ShoppingCart]
 (
 	[Id]     INT           NOT NULL IDENTITY(1,1) PRIMARY KEY, 
-    [UserId] NVARCHAR(128) NOT NULL,
-	CONSTRAINT [AK_dbo.ShoppingCart] UNIQUE(UserId) --uživatel má jen jeden košík, nejsou dva košíky ukazující na stejného uživatele
+    [UserId] NVARCHAR(128) NOT NULL, --key to AspNetUsers
+	CONSTRAINT [AK_dbo.ShoppingCart] UNIQUE(UserId) --a user has one cart, max one cart pointing to same user
 )
 
 CREATE TABLE [dbo].[CartItem] (
@@ -42,3 +42,19 @@ CREATE TABLE [dbo].[CartItem] (
     CONSTRAINT [FK_CartItem_ShoppingCart] FOREIGN KEY ([CartId]) REFERENCES [dbo].[ShoppingCart] ([Id])
 );
 
+CREATE TABLE [dbo].[Order] (
+    [Id]         INT            NOT NULL IDENTITY(1,1),
+    [UserId]     NVARCHAR (128) NOT NULL, --key to AspNetUsers
+    [CreateDate] DATETIME       NOT NULL,
+    [State]      NVARCHAR (50)  NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE [dbo].[OrderProduct] (
+    [OrderId]   INT NOT NULL,
+    [ProductId] INT NOT NULL,
+    [Quantity]  INT DEFAULT ((1)) NOT NULL,
+    CONSTRAINT [PK_OrderProduct] PRIMARY KEY CLUSTERED ([OrderId] ASC, [ProductId] ASC),
+    CONSTRAINT [FK_OrderProduct_Order] FOREIGN KEY ([OrderId]) REFERENCES [dbo].[Order] ([Id]),
+    CONSTRAINT [FK_OrderProduct_Product] FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Product] ([id])
+);

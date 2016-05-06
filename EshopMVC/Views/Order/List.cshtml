@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EshopMVC.Models.Order.OrderSummaryViewModel>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/_LayoutPage.cshtml";
+}
+
+<table>
+    <thead>
+    <tr>
+        <th>
+            Orde number
+        </th>
+        <th>
+            Created
+        </th>
+        <th>
+            Total price
+        </th>
+        <th>
+            State
+        </th>
+    </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @item.CreateDate
+            </td>
+            <td>
+                @item.TotalPrice
+            </td>
+            <td>
+                @item.State
+            </td>
+        </tr>
+    }
+
+</table>
+

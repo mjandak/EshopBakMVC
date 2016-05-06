@@ -1,6 +1,12 @@
-﻿<div>You are logged in as 
+﻿<div>You are logged in as
     <b>
         @*@User.Identity.Name*@
         @ViewBag.UserName
     </b>
+</div>
+<br/>
+<div class="brownBck blackBorder">
+    @Html.ActionLink("Catalog", "Index", "Home")<br />
+    @Html.ActionLink("Cart", "Index", "Cart")<br/>
+    @Html.ActionLink("Orders", "List", "Order")<br />
 </div>

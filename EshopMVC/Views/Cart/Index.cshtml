@@ -48,11 +48,11 @@
                 </td>
                 <td>
                     @*<input type="number" value="@item.Quantity" name="Quantity" />*@
-                    @Html.DisplayFor(modelItem => items[i].Quantity)
+                    @Html.TextBoxFor(modelItem => items[i].Quantity)
                 </td>
                 <td style="text-align: right">
                     @*@String.Format("{0:C}", items[i].Price)*@
-                    @Html.TextBoxFor(modelItem => items[i].Price)
+                    @Html.DisplayFor(modelItem => items[i].Price)
                 </td>
             </tr>
     }

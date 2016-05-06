@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using EshopMVC.Models.Order;
 
 namespace EshopMVC.Controllers
 {
@@ -37,6 +38,19 @@ namespace EshopMVC.Controllers
                 db.SaveChanges();
             }
             return View("Created");
+        }
+
+        [Authorize]
+        public ActionResult List()
+        {
+            ApplicationUser user = UserManager.FindByName(User.Identity.Name);
+            using (var db = new DB_9FCCB1_eshopEntities())
+            {
+                var orders = db.Order.Where(o => o.UserId == user.Id);
+                var model = orders.Select(o =>
+                    new OrderSummaryViewModel(o));
+                return View(model.ToArray());
+            }
         }
     }
 }

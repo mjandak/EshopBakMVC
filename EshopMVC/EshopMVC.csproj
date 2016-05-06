@@ -218,6 +218,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Members\LoginViewModel.cs" />
     <Compile Include="Models\Members\RegisterViewModel.cs" />
+    <Compile Include="Models\Order\OrderSummaryViewModel.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -253,6 +254,7 @@
     <Content Include="Views\Details\Index.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Created.cshtml" />
+    <Content Include="Views\Order\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

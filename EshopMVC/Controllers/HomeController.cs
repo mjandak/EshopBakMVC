@@ -7,6 +7,13 @@ using System.Web.Mvc;
 
 namespace EshopMVC.Controllers
 {
+    enum OrderByEnum : int
+    {
+        Newest,
+        Cheapest,
+        MostExpensive
+    }
+
     public class HomeController : Controller
     {
         private readonly DB_9FCCB1_eshopEntities _db = new DB_9FCCB1_eshopEntities();
@@ -32,9 +39,24 @@ namespace EshopMVC.Controllers
             CreateTreeModel(_db.Category.First(c => c.id == ctgrId).parent_id, ctgrId);
         }
 
-        //
-        // GET: /Home/
-        public ActionResult Index(int? CatId, int PageStart = 1)
+        private IQueryable<Product> orderQuery(IQueryable<Product> query, OrderByEnum orderType)
+        {
+            if (orderType == OrderByEnum.Newest)
+            {
+                return query.OrderBy(p => p.id);
+            }
+            if (orderType == OrderByEnum.Cheapest)
+            {
+                return query.OrderBy(p => p.price);
+            }
+            if (orderType == OrderByEnum.MostExpensive)
+            {
+                return query.OrderByDescending(p => p.price);
+            }
+            throw new NotImplementedException("Unknown order type.");
+        }
+
+        public ActionResult Index(int? CatId, int PageStart = 1, int OrderBy = 0)
         {
             using (_db)
             {
@@ -46,10 +68,9 @@ namespace EshopMVC.Controllers
 
                 if (CatId == null)
                 {
-                    var products = _db.Product.Where(p => p.special)
-                        .OrderBy(p => p.id)
-                        .Skip(PageStart)
-                        .Take(9);
+                    var products = _db.Product.Where(p => p.special);
+                    products = orderQuery(products, (OrderByEnum) OrderBy);
+                    products = products.Skip(PageStart).Take(9);
 
                     var topCtgrs = _db.Category.Where(c => c.parent_id == 0).ToArray();
                     model.Categories = topCtgrs.Select(c => new CategoryViewModel(c)).ToArray();

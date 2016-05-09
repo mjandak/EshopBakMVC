@@ -5,63 +5,69 @@
 
 @model EshopMVC.Models.CategoryBrowserViewModel
 
-<table id="catalogTable">
-    @{
-        const int NumberOfColumns = 3;
-        int skip = 0;
-        var products = Model.Products.Skip(skip).Take(NumberOfColumns);
-        while (products.Any())
-        {
-        <tr>
-            @foreach (Product product in products)
-            {
-                <td>
-                    <div class="productTitle">@product.title</div>
-                    <br />
-                    <div class="imgContainer">
-                        @if (string.IsNullOrWhiteSpace(product.small_image_url))
-                        {
-                            <span>Picture not available.</span>
-                        }
-                        else
-                        {
-                            <img src="@Url.Content(product.small_image_url)"/>
-                        }
-                    </div>
-                    <br />
-                    @product.price.ToString("C")
-                    <br />
-                    <div class="brownBck blackBorder">
-                        @Ajax.ActionLink("Add to cart", "Add", "Cart",
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    <div  class="orderByContainer">
+        <span>Order by: </span>@Html.DropDownList("OrderBy", Model.OrderByOptions, new { @onchange = "this.form.submit();" })
+    </div>
+    <table id="catalogTable">
+        @{
+    const int NumberOfColumns = 3;
+    int skip = 0;
+    var products = Model.Products.Skip(skip).Take(NumberOfColumns);
+    while (products.Any())
+    {
+            <tr>
+                @foreach (Product product in products)
+                {
+                    <td>
+                        <div class="productTitle">@product.title</div>
+                        <br />
+                        <div class="imgContainer">
+                            @if (string.IsNullOrWhiteSpace(product.small_image_url))
+                            {
+                                <span>Picture not available.</span>
+                            }
+                            else
+                            {
+                                <img src="@Url.Content(product.small_image_url)"/>
+                            }
+                        </div>
+                        <br />
+                        @product.price.ToString("C")
+                        <br />
+                        <div class="brownBck blackBorder">
+                            @Ajax.ActionLink("Add to cart", "Add", "Cart",
                                 new { id = product.id, title = product.title, price = product.price, quantity = 1 },
                                 new AjaxOptions
                                 {
                                     HttpMethod = "GET",
                                     OnComplete = "ShowAddedToCartMsg();"
                                 })
-                        <br />
-                        @Html.ActionLink("Details", "Index", "Details", new { Id = product.id }, null)
-                    </div>
-                </td>
-            }
-        </tr>
-            skip += NumberOfColumns;
-            products = Model.Products.Skip(skip).Take(NumberOfColumns);
-        }
+                            <br />
+                            @Html.ActionLink("Details", "Index", "Details", new { Id = product.id }, null)
+                        </div>
+                    </td>
+                }
+            </tr>
+                skip += NumberOfColumns;
+                products = Model.Products.Skip(skip).Take(NumberOfColumns);
     }
-    <tr class="pager">
-        <td>
-            @Html.ActionLink("<<<", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Prev }, null)
-        </td>
-        <td colspan="@(NumberOfColumns - 2)">
-            @*TODO: count*@
-        </td>
-        <td style="text-align: right">
-            @Html.ActionLink(">>>", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Next }, null)
-        </td>
-    </tr>
-</table>
-
+        }
+        <tr class="pager">
+            <td>
+                @Html.ActionLink("<<<", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Prev, OrderBy = ViewBag.OrderBy }, null)
+            </td>
+            <td colspan="@(NumberOfColumns - 2)">
+                @*TODO: count*@
+            </td>
+            <td style="text-align: right">
+                @Html.ActionLink(">>>", "Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Next, OrderBy = ViewBag.OrderBy }, null)
+            </td>
+        </tr>
+    </table>
+}
 
 
 @section Tree {

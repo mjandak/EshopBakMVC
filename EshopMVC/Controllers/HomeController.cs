@@ -63,6 +63,7 @@ namespace EshopMVC.Controllers
                 var model = new CategoryBrowserViewModel();
 
                 ViewBag.CatId = CatId;
+                ViewBag.OrderBy = OrderBy;
                 ViewBag.Next = PageStart + 9;
                 ViewBag.Prev = Math.Max(PageStart - 9, 1);
 
@@ -89,10 +90,9 @@ namespace EshopMVC.Controllers
                     var products = _db.Product.Where(
                         p => p.Category.Any(
                             c => subCtgrIds.Contains(c.id) || c.id == CatId.Value))
-                            .Distinct()
-                            .OrderBy(p => p.id)
-                            .Skip(PageStart)
-                            .Take(9);
+                            .Distinct();
+                    products = orderQuery(products, (OrderByEnum) OrderBy);
+                    products = products.Skip(PageStart).Take(9);
 
                     model.Products = products.ToList();
                 }

@@ -64,14 +64,21 @@ img {
     width: 300px;
 }
 
+.orderByContainer {
+    width: 500px;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+
 #catalogTable {
     border-collapse: collapse;
     margin: 0 auto;
+    width: 500px;
 }
 
     #catalogTable td {
         border: 1px solid black;
-        width:166px;
+        /*width:166px;*/
         padding:3px;
     }
 
@@ -111,3 +118,4 @@ img {
     background-color: #eee8aa;
     padding:5px;
 }
+

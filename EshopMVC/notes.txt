@@ -1,0 +1,6 @@
+﻿to do:
+product count
+email confirm registration
+CreateTreeModel(CatId.Value, null); remove recursion?
+order by update via ajax
+https

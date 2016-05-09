@@ -12,15 +12,8 @@ using System.Web.Mvc;
 
 namespace EshopMVC.Controllers
 {
-    public class MembersController : Controller
+    public class MembersController : BaseController
     {
-        public MembersController()
-        {
-            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
-        }
-
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-
         private IAuthenticationManager AuthenticationManager
         {
             get
@@ -82,7 +75,7 @@ namespace EshopMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string ReturnUrl)
+        public ActionResult Login(LoginViewModel model /*, string ReturnUrl*/)
         {
             if (ModelState.IsValid)
             {
@@ -148,16 +141,16 @@ namespace EshopMVC.Controllers
             }
         }
 
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
+        //private ActionResult RedirectToLocal(string returnUrl)
+        //{
+        //    if (Url.IsLocalUrl(returnUrl))
+        //    {
+        //        return Redirect(returnUrl);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
 	}
 }

@@ -160,6 +160,7 @@
     <Content Include="Images\lcdtv_large.jpg" />
     <Content Include="Images\lcdtv_small.jpg" />
     <Content Include="Images\notebook_large.jpg" />
+    <Content Include="notes.txt" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

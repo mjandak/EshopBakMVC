@@ -23,13 +23,6 @@ namespace EshopMVC.Controllers
         }
 
         //
-        // GET: /Users/
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -116,6 +109,12 @@ namespace EshopMVC.Controllers
 
             //return RedirectToLocal(ReturnUrl);
             return PartialView("_Login", model);
+        }
+
+        public ActionResult LogOut()
+        {
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
         private void SignInAsync(ApplicationUser user, bool isPersistent)

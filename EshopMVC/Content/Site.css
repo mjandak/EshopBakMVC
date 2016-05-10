@@ -15,12 +15,16 @@ article, aside, figure, footer, header, hgroup, menu, nav, section {
 }*/
 /*h2, h3, h4, h5, p, ul, ol  { margin : 0 20px; padding : .5em 0; }*/
 img {
-    border: 0px;
+    border: 0;
+}
+
+a {
+    color: black;
 }
 
 /* =page level container */
 #pageContainer {
-    margin: 0px auto 0px auto;
+    margin: 0 auto 0 auto;
     width: 1200px;
 }
 
@@ -74,6 +78,7 @@ img {
     border-collapse: collapse;
     margin: 0 auto;
     width: 500px;
+    table-layout: fixed;
 }
 
     #catalogTable td {

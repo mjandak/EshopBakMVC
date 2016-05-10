@@ -37,7 +37,7 @@
                         <br />
                         @product.price.ToString("C")
                         <br />
-                        <div class="brownBck blackBorder">
+                        <div class="actions">
                             @Ajax.ActionLink("Add to cart", "Add", "Cart",
                                 new { id = product.id, title = product.title, price = product.price, quantity = 1 },
                                 new AjaxOptions
@@ -71,7 +71,7 @@
 
 
 @section Tree {
-    <div class="blackBorder brownBck">
+    <div class="commonRect">
         <div><b>Categories</b></div>
         @Html.Partial("_Tree", Model.Categories)
     </div>

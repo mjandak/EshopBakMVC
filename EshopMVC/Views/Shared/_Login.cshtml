@@ -4,54 +4,57 @@
     //using (Html.BeginForm("Login", "Users", new { ReturnUrl = Request.Url.PathAndQuery }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        <table style="width: 100%; border-collapse: collapse;">
+        <div class="commonRect">
+            <table>
+                <tbody>
+                    <tr>
+                        <td colspan="2"><b>Sign in</b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        @Html.LabelFor(model => model.UserName)
+                        @*<label id="LoginView1_Login1_UserNameLabel" for="LoginView1_Login1_UserName">Přihlašovací jméno:</label></td>*@
+                        <td>
+                            @Html.TextBoxFor(m => m.UserName)
+                            @*<input type="text" style="width: 100px;" id="LoginView1_Login1_UserName" name="ctl00$LoginView1$Login1$UserName">*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        @Html.LabelFor(model => model.Password)
+                        @*<label id="LoginView1_Login1_PasswordLabel" for="LoginView1_Login1_Password">Heslo:</label></td>*@
+                        <td>
+                            @Html.PasswordFor(m => m.Password)
+                            @*<input type="password" style="width: 100px;" id="LoginView1_Login1_Password" name="ctl00$LoginView1$Login1$Password">*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="color: red" colspan="2">
+                            @Html.ValidationSummary()
+                            @*@{Html.RenderAction("Login", "Users");}*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Sign in">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+@*<table style="width: 100%; border-collapse: collapse;">
             <tbody>
                 <tr>
                     <td>
-                        <table class="brownBck blackBorder">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2">Sign in</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @Html.LabelFor(model => model.UserName)
-                                        @*<label id="LoginView1_Login1_UserNameLabel" for="LoginView1_Login1_UserName">Přihlašovací jméno:</label></td>*@
-                                    <td>
-                                        @Html.TextBoxFor(m => m.UserName)
-                                        @*<input type="text" style="width: 100px;" id="LoginView1_Login1_UserName" name="ctl00$LoginView1$Login1$UserName">*@
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        @Html.LabelFor(model => model.Password)
-                                        @*<label id="LoginView1_Login1_PasswordLabel" for="LoginView1_Login1_Password">Heslo:</label></td>*@
-                                    <td>
-                                        @Html.PasswordFor(m => m.Password)
-                                        @*<input type="password" style="width: 100px;" id="LoginView1_Login1_Password" name="ctl00$LoginView1$Login1$Password">*@
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="color: red" colspan="2">
-                                        @Html.ValidationSummary()
-                                        @*@{Html.RenderAction("Login", "Users");}*@
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <input type="submit" value="Sign in">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table>*@
 
     }
     <br />
-    <div class="brownBck blackBorder">
+    <div class="commonRect">
         @Html.ActionLink("Catalog", "Index", "Home")<br />
         @Html.ActionLink("Cart", "Index", "Cart")<br />
         @Html.ActionLink("Sign up", "Register", "Members")

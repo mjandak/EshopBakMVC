@@ -6,7 +6,7 @@
 @model EshopMVC.Models.CategoryBrowserViewModel
 
 
-@using (Html.BeginForm("Index", "Home"))
+@using (Html.BeginForm("Index", "Home", new { CatId = ViewBag.CatId, PageStart = ViewBag.Prev, OrderBy = ViewBag.OrderBy }))
 {
     <div  class="orderByContainer">
         <span>Order by: </span>@Html.DropDownList("OrderBy", Model.OrderByOptions, new { @onchange = "this.form.submit();" })

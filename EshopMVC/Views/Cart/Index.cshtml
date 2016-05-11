@@ -2,7 +2,7 @@
 @model EshopMVC.Models.Cart.CartViewModel
 
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Cart";
     Layout = "~/Views/_LayoutPage.cshtml";
 }
 
@@ -67,7 +67,11 @@
         </tr>
 
         <tr>
-            <td colspan="3">
+            <td>
+                @*@Html.ActionLink("Save changes", "SaveChanges", "Cart")*@
+                <input formaction="@Url.Action("SaveChanges", "Cart")" type="submit" value="Save changes" />
+            </td>
+            <td colspan="2"></td>
             @*TODO*@
             @*<input type="submit" id="ContentPlaceHolder1_repCart_btnSaveChanges" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" value="Uložit změny" name="ctl00$ContentPlaceHolder1$repCart$ctl03$btnSaveChanges"></td>*@
             <td>
@@ -85,7 +89,7 @@
         {
             <tr>
                 <td colspan="4">
-                    <input type="submit" value="Create order" />
+                    <input formaction="@Url.Action("Create", "Order") type="submit" value="Create order" />
                 </td>
             </tr>
         }

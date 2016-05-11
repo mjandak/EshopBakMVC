@@ -1,5 +1,5 @@
 ﻿to do:
-cart update
+refresh cart page after sign in
 x out of y
 email confirm registration
 CreateTreeModel, remove recursion?

@@ -113,6 +113,57 @@ namespace EshopMVC.Controllers
             return View();
         }
 
+        public ActionResult SaveChanges(IEnumerable<CartItemViewModel> items)
+        {
+            var cartItems = items.Select(
+                i => new CartItem { Id = i.ProductId, Title = i.Title, Price = i.Price, Quantity = i.Quantity }
+                );
+
+            ShoppingCart cart;
+            if (User.Identity.IsAuthenticated)
+            {
+                ApplicationUser user = UserManager.FindByName(User.Identity.Name);
+                using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                {
+                    cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                    if (cart == null)
+                    {
+                        cart = new ShoppingCart() { UserId = user.Id };
+                        cart.CartItem.Clear();
+                        cart.AddItems(cartItems);
+                        dbCtx.ShoppingCart.Add(cart);
+                        dbCtx.SaveChanges();
+                    }
+                    else
+                    {
+                        cart.CartItem.Clear();
+                        cart.AddItems(cartItems);
+                        dbCtx.SaveChanges();
+                    }
+                }
+            }
+            else
+            {
+                cart = (ShoppingCart)Session["Cart"];
+                if (cart == null)
+                {
+                    cart = new ShoppingCart();
+                    cart.CartItem.Clear();
+                    cart.AddItems(cartItems);
+                    Session.Add("Cart", cart);
+                }
+                else
+                {
+                    cart.CartItem.Clear();
+                    cart.AddItems(cartItems);
+                }
+            }
+
+            var model = new CartViewModel(cart);
+
+            return View("Index", model);
+        }
+
         //private ShoppingCart GetCart()
         //{
         //    if (User.Identity.IsAuthenticated)

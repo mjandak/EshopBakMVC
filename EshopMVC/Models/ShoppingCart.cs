@@ -17,5 +17,13 @@ namespace EshopMVC
             }
             cartItem.Quantity += item.Quantity;
         }
+
+        public void AddItems(IEnumerable<CartItem> items)
+        {
+            foreach (CartItem item in items)
+            {
+                this.AddItem(item);
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿body {
-    font-family:Verdana;
-    font-size:0.8em;
+    font-family: Verdana;
+    font-size: 0.8em;
 }
 
 /*html5 semantics tags */
@@ -84,7 +84,7 @@ a {
     #catalogTable td {
         border: 1px solid black;
         /*width:166px;*/
-        padding:3px;
+        padding: 3px;
     }
 
     #catalogTable .productTitle {
@@ -108,8 +108,8 @@ a {
 
 #pageNav ul {
     list-style-type: none;
-    margin-left:10px;
-    padding-left:0;
+    margin-left: 10px;
+    padding-left: 0;
 }
 
 .blackBorder {
@@ -121,14 +121,14 @@ a {
 }
 
 .ordersTable {
-    border-collapse:collapse;
+    border-collapse: collapse;
 }
 
-.ordersTable td, th {
-    border: 1px solid black;
-    background-color: #eee8aa;
-    padding:5px;
-}
+    .ordersTable td, th {
+        border: 1px solid black;
+        background-color: #eee8aa;
+        padding: 3px;
+    }
 
 .commonRect {
     background-color: #eee8aa;
@@ -140,3 +140,19 @@ a {
     width: 500px;
     margin: 0 auto;
 }
+
+#cartTable {
+    border-collapse: collapse;
+    margin: 0 auto;
+    table-layout: fixed;
+}
+
+    #cartTable td, th {
+        border: 1px solid black;
+        background-color: #eee8aa;
+        padding: 3px;
+    }
+
+    #cartTable .quantity {
+        width: 50px;
+    }

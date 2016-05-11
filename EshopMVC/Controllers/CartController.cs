@@ -117,7 +117,7 @@ namespace EshopMVC.Controllers
         {
             var cartItems = items.Select(
                 i => new CartItem { Id = i.ProductId, Title = i.Title, Price = i.Price, Quantity = i.Quantity }
-                );
+                ).Where(i => i.Quantity > 0).ToArray();
 
             ShoppingCart cart;
             if (User.Identity.IsAuthenticated)
@@ -129,13 +129,13 @@ namespace EshopMVC.Controllers
                     if (cart == null)
                     {
                         cart = new ShoppingCart() { UserId = user.Id };
-                        cart.CartItem.Clear();
                         cart.AddItems(cartItems);
                         dbCtx.ShoppingCart.Add(cart);
                         dbCtx.SaveChanges();
                     }
                     else
                     {
+                        dbCtx.CartItem.RemoveRange(cart.CartItem);
                         cart.CartItem.Clear();
                         cart.AddItems(cartItems);
                         dbCtx.SaveChanges();

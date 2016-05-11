@@ -248,7 +248,6 @@
     <Content Include="Views\Members\Register.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Shared\_LoggedIn.cshtml" />
-    <Content Include="Views\Cart\View2.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\Empty.cshtml" />
     <Content Include="Views\Home\_Tree.cshtml" />

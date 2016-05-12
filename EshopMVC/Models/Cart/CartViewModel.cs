@@ -16,10 +16,10 @@ namespace EshopMVC.Models.Cart
 
         }
 
-        public CartViewModel(ShoppingCart cart)
+        public CartViewModel(IQueryable<CartProduct> items)
         {
-            Items =  cart.CartItem.Select(i => new CartItemViewModel(i)).ToArray();
-            Total = cart.CartItem.Sum(i => i.Price*i.Quantity);
+            Items =  items.Select(i => new CartItemViewModel(i)).ToArray();
+            Total = items.Sum(i => i.Product.price*i.Quantity);
         }
     }
 }

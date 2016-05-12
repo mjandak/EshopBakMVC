@@ -14,34 +14,34 @@ namespace EshopMVC.Controllers
     {
         public ActionResult Index()
         {
-            ShoppingCart cart;
+            IEnumerable<CartProduct> cart;
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
                 if (User.Identity.IsAuthenticated)
                 {
                     ApplicationUser user = UserManager.FindByName(User.Identity.Name);
 
-                    cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                    cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id).CartProduct;
                 }
                 else
                 {
-                    cart = (ShoppingCart)Session["Cart"];
+                    cart = (IEnumerable<CartProduct>)Session["Cart"];
                 }
 
-                if (cart == null || cart.CartItem.Count < 1)
+                if (cart == null || cart.Count() < 1)
                 {
                     return View("Empty");
                 }
 
-                var model = new CartViewModel(cart);
+                var model = new CartViewModel(cart.AsQueryable<CartProduct>());
 
                 return View(model);
             }
         }
 
-        public void Add(int id, string title, decimal price, int quantity)
+        public void Add(int id, int quantity)
         {
-            var cartItem = new CartItem { ProductId = id, Title = title, Price = price, Quantity = quantity };
+            var cartItem = new CartProduct { ProductId = id, Quantity = quantity };
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser user = UserManager.FindByName(User.Identity.Name);
@@ -92,8 +92,8 @@ namespace EshopMVC.Controllers
                     }
                     else
                     {
-                        dbCtx.CartItem.RemoveRange(dbCart.CartItem);
-                        dbCart.CartItem.Clear();
+                        dbCtx.CartProduct.RemoveRange(dbCart.CartProduct);
+                        dbCart.CartProduct.Clear();
                         dbCtx.SaveChanges();
                     }
                 }
@@ -107,62 +107,62 @@ namespace EshopMVC.Controllers
                 }
                 else
                 {
-                    cart.CartItem.Clear();
+                    cart.CartProduct.Clear();
                 }
             }
             return View();
         }
 
-        public ActionResult SaveChanges(IEnumerable<CartItemViewModel> items)
-        {
-            var cartItems = items.Select(
-                i => new CartItem { ProductId = i.ProductId, Title = i.Title, Price = i.Price, Quantity = i.Quantity }
-                ).Where(i => i.Quantity > 0).ToArray();
+        //public ActionResult SaveChanges(IEnumerable<CartItemViewModel> items)
+        //{
+        //    var cartItems = items.Select(
+        //        i => new CartProduct { ProductId = i.ProductId, Quantity = i.Quantity }
+        //        ).Where(i => i.Quantity > 0).ToArray();
 
-            ShoppingCart cart;
-            if (User.Identity.IsAuthenticated)
-            {
-                ApplicationUser user = UserManager.FindByName(User.Identity.Name);
-                using (var dbCtx = new DB_9FCCB1_eshopEntities())
-                {
-                    cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-                    if (cart == null)
-                    {
-                        cart = new ShoppingCart() { UserId = user.Id };
-                        cart.AddItems(cartItems);
-                        dbCtx.ShoppingCart.Add(cart);
-                        dbCtx.SaveChanges();
-                    }
-                    else
-                    {
-                        dbCtx.CartItem.RemoveRange(cart.CartItem);
-                        cart.CartItem.Clear();
-                        cart.AddItems(cartItems);
-                        dbCtx.SaveChanges();
-                    }
-                }
-            }
-            else
-            {
-                cart = (ShoppingCart)Session["Cart"];
-                if (cart == null)
-                {
-                    cart = new ShoppingCart();
-                    cart.CartItem.Clear();
-                    cart.AddItems(cartItems);
-                    Session.Add("Cart", cart);
-                }
-                else
-                {
-                    cart.CartItem.Clear();
-                    cart.AddItems(cartItems);
-                }
-            }
+        //    ShoppingCart cart;
+        //    if (User.Identity.IsAuthenticated)
+        //    {
+        //        ApplicationUser user = UserManager.FindByName(User.Identity.Name);
+        //        using (var dbCtx = new DB_9FCCB1_eshopEntities())
+        //        {
+        //            cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+        //            if (cart == null)
+        //            {
+        //                cart = new ShoppingCart() { UserId = user.Id };
+        //                cart.AddItems(cartItems);
+        //                dbCtx.ShoppingCart.Add(cart);
+        //                dbCtx.SaveChanges();
+        //            }
+        //            else
+        //            {
+        //                dbCtx.CartProduct.RemoveRange(cart.CartProduct);
+        //                cart.CartProduct.Clear();
+        //                cart.AddItems(cartItems);
+        //                dbCtx.SaveChanges();
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        cart = (ShoppingCart)Session["Cart"];
+        //        if (cart == null)
+        //        {
+        //            cart = new ShoppingCart();
+        //            cart.CartProduct.Clear();
+        //            cart.AddItems(cartItems);
+        //            Session.Add("Cart", cart);
+        //        }
+        //        else
+        //        {
+        //            cart.CartProduct.Clear();
+        //            cart.AddItems(cartItems);
+        //        }
+        //    }
 
-            var model = new CartViewModel(cart);
+        //    var model = new CartViewModel(cart);
 
-            return View("Index", model);
-        }
+        //    return View("Index", model);
+        //}
 
         //private ShoppingCart GetCart()
         //{

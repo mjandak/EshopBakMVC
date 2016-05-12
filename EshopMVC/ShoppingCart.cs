@@ -16,12 +16,12 @@ namespace EshopMVC
     {
         public ShoppingCart()
         {
-            this.CartItem = new HashSet<CartItem>();
+            this.CartProduct = new HashSet<CartProduct>();
         }
     
         public int Id { get; set; }
         public string UserId { get; set; }
     
-        public virtual ICollection<CartItem> CartItem { get; set; }
+        public virtual ICollection<CartProduct> CartProduct { get; set; }
     }
 }

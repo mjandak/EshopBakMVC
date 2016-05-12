@@ -92,9 +92,9 @@ namespace EshopMVC.Controllers
                             }
                             else
                             {
-                                dbCart.CartItem.Clear();
+                                dbCart.CartProduct.Clear();
                                 dbCtx.SaveChanges();
-                                dbCart.CartItem = sessionCart.CartItem; //TODO: merge carts
+                                dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
                                 dbCtx.SaveChanges();
                             }
                         }

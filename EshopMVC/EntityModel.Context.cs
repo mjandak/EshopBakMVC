@@ -25,11 +25,11 @@ namespace EshopMVC
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<CartItem> CartItem { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderProduct> OrderProduct { get; set; }
+        public DbSet<CartProduct> CartProduct { get; set; }
     }
 }

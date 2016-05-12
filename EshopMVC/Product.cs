@@ -18,6 +18,7 @@ namespace EshopMVC
         {
             this.Category = new HashSet<Category>();
             this.OrderProduct = new HashSet<OrderProduct>();
+            this.CartProduct = new HashSet<CartProduct>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,6 @@ namespace EshopMVC
     
         public virtual ICollection<Category> Category { get; set; }
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
+        public virtual ICollection<CartProduct> CartProduct { get; set; }
     }
 }

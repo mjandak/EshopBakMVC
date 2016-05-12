@@ -7,20 +7,20 @@ namespace EshopMVC
 {
     public partial class ShoppingCart
     {
-        public void AddItem(CartItem item)
+        public void AddItem(CartProduct item)
         {
-            var cartItem = CartItem.FirstOrDefault(c => c.ProductId == item.ProductId);
+            var cartItem = CartProduct.FirstOrDefault(c => c.ProductId == item.ProductId);
             if (cartItem == null)
             {
-                CartItem.Add(item);
+                CartProduct.Add(item);
                 return;
             }
             cartItem.Quantity += item.Quantity;
         }
 
-        public void AddItems(IEnumerable<CartItem> items)
+        public void AddItems(IEnumerable<CartProduct> items)
         {
-            foreach (CartItem item in items)
+            foreach (CartProduct item in items)
             {
                 this.AddItem(item);
             }

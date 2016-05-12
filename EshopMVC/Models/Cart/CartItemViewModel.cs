@@ -9,14 +9,13 @@ namespace EshopMVC.Models.Cart
     {
         public CartItemViewModel()
         {
-
         }
 
-        public CartItemViewModel(CartItem cartItem)
+        public CartItemViewModel(CartProduct cartItem)
         {
             ProductId = cartItem.ProductId;
-            Title = cartItem.Title;
-            Price = cartItem.Price;
+            Title = cartItem.Product.title;
+            Price = cartItem.Product.price;
             Quantity = cartItem.Quantity;
         }
 

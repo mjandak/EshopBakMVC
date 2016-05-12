@@ -34,12 +34,13 @@ CREATE TABLE [dbo].[ShoppingCart]
 )
 
 CREATE TABLE [dbo].[CartItem] (
-    [ProductId] INT            NOT NULL IDENTITY(1,1) PRIMARY KEY,
+    [ProductId] INT            NOT NULL,
     [Title]     NVARCHAR (100) NOT NULL,
     [Price]     DECIMAL (18)   NOT NULL,
     [Quantity]  INT            NOT NULL,
-    [CartId]    INT            NULL,
-    CONSTRAINT [FK_CartItem_ShoppingCart] FOREIGN KEY ([CartId]) REFERENCES [dbo].[ShoppingCart] ([Id])
+    [CartId]    INT            NOT NULL,
+    CONSTRAINT [FK_CartItem_ShoppingCart] FOREIGN KEY ([CartId]) REFERENCES [dbo].[ShoppingCart] ([Id]), 
+    CONSTRAINT [PK_CartItem] PRIMARY KEY ([ProductId], [CartId])
 );
 
 CREATE TABLE [dbo].[Order] (

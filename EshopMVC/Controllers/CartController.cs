@@ -41,7 +41,7 @@ namespace EshopMVC.Controllers
 
         public void Add(int id, string title, decimal price, int quantity)
         {
-            var cartItem = new CartItem { Id = id, Title = title, Price = price, Quantity = quantity };
+            var cartItem = new CartItem { ProductId = id, Title = title, Price = price, Quantity = quantity };
             if (User.Identity.IsAuthenticated)
             {
                 ApplicationUser user = UserManager.FindByName(User.Identity.Name);
@@ -116,7 +116,7 @@ namespace EshopMVC.Controllers
         public ActionResult SaveChanges(IEnumerable<CartItemViewModel> items)
         {
             var cartItems = items.Select(
-                i => new CartItem { Id = i.ProductId, Title = i.Title, Price = i.Price, Quantity = i.Quantity }
+                i => new CartItem { ProductId = i.ProductId, Title = i.Title, Price = i.Price, Quantity = i.Quantity }
                 ).Where(i => i.Quantity > 0).ToArray();
 
             ShoppingCart cart;

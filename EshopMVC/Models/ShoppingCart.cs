@@ -9,7 +9,7 @@ namespace EshopMVC
     {
         public void AddItem(CartItem item)
         {
-            var cartItem = CartItem.FirstOrDefault(c => c.Id == item.Id);
+            var cartItem = CartItem.FirstOrDefault(c => c.ProductId == item.ProductId);
             if (cartItem == null)
             {
                 CartItem.Add(item);

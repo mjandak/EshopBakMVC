@@ -14,7 +14,7 @@ namespace EshopMVC.Models.Cart
 
         public CartItemViewModel(CartItem cartItem)
         {
-            ProductId = cartItem.Id;
+            ProductId = cartItem.ProductId;
             Title = cartItem.Title;
             Price = cartItem.Price;
             Quantity = cartItem.Quantity;

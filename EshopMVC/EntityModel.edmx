@@ -4,14 +4,44 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EntityModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EntityModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="EntityModelStoreContainer">
+          <EntitySet Name="CartItem" EntityType="EntityModel.Store.CartItem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Category" EntityType="EntityModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Order" EntityType="EntityModel.Store.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderProduct" EntityType="EntityModel.Store.OrderProduct" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product" EntityType="EntityModel.Store.Product" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductCategory" EntityType="EntityModel.Store.ProductCategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShoppingCart" EntityType="EntityModel.Store.ShoppingCart" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CartItem_ShoppingCart" Association="EntityModel.Store.FK_CartItem_ShoppingCart">
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderProduct_Order" Association="EntityModel.Store.FK_OrderProduct_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderProduct_Product" Association="EntityModel.Store.FK_OrderProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderProduct" EntitySet="OrderProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Category" Association="EntityModel.Store.FK_ProductCategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_Product" Association="EntityModel.Store.FK_ProductCategory_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="CartItem">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="CartId" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Price" Type="decimal" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="CartId" Type="int" Nullable="false" />
         </EntityType>
@@ -20,15 +50,15 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="title" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="parent_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="State" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -46,12 +76,12 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="price" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="title" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="price" Type="decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="small_image_url" Type="nvarchar" MaxLength="50" />
           <Property Name="large_image_url" Type="nvarchar" MaxLength="50" />
           <Property Name="description" Type="ntext" />
-          <Property Name="producer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="producer" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="special" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductCategory">
@@ -66,12 +96,12 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
         </EntityType>
         <Association Name="FK_CartItem_ShoppingCart">
-          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="1" />
-          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <End Role="ShoppingCart" Type="EntityModel.Store.ShoppingCart" Multiplicity="1" />
+          <End Role="CartItem" Type="EntityModel.Store.CartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ShoppingCart">
               <PropertyRef Name="Id" />
@@ -82,8 +112,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderProduct_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderProduct" Type="Self.OrderProduct" Multiplicity="*" />
+          <End Role="Order" Type="EntityModel.Store.Order" Multiplicity="1" />
+          <End Role="OrderProduct" Type="EntityModel.Store.OrderProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Order">
               <PropertyRef Name="Id" />
@@ -94,8 +124,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_OrderProduct_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="OrderProduct" Type="Self.OrderProduct" Multiplicity="*" />
+          <End Role="Product" Type="EntityModel.Store.Product" Multiplicity="1" />
+          <End Role="OrderProduct" Type="EntityModel.Store.OrderProduct" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="id" />
@@ -106,8 +136,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductCategory_Category">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <End Role="Category" Type="EntityModel.Store.Category" Multiplicity="1" />
+          <End Role="ProductCategory" Type="EntityModel.Store.ProductCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="id" />
@@ -118,8 +148,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductCategory_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <End Role="Product" Type="EntityModel.Store.Product" Multiplicity="1" />
+          <End Role="ProductCategory" Type="EntityModel.Store.ProductCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="id" />
@@ -129,35 +159,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="EntityModelStoreContainer">
-          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderProduct" EntityType="Self.OrderProduct" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CartItem_ShoppingCart" Association="Self.FK_CartItem_ShoppingCart">
-            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
-            <End Role="CartItem" EntitySet="CartItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderProduct_Order" Association="Self.FK_OrderProduct_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="OrderProduct" EntitySet="OrderProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderProduct_Product" Association="Self.FK_OrderProduct_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="OrderProduct" EntitySet="OrderProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductCategory_Category" Association="Self.FK_ProductCategory_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductCategory_Product" Association="Self.FK_ProductCategory_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductCategory" EntitySet="ProductCategory" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -188,14 +189,15 @@
         </EntityContainer>
         <EntityType Name="CartItem">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="CartId" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="CartId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ShoppingCart" Relationship="EntityModel.FK_CartItem_ShoppingCart" FromRole="CartItem" ToRole="ShoppingCart" />
+          <Property Type="Int32" Name="ProductId" Nullable="false" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -299,7 +301,7 @@
           <EntitySetMapping Name="CartItem">
             <EntityTypeMapping TypeName="EntityModel.CartItem">
               <MappingFragment StoreEntitySet="CartItem">
-                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

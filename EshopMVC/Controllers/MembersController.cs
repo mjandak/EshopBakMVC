@@ -92,6 +92,8 @@ namespace EshopMVC.Controllers
                             }
                             else
                             {
+                                dbCart.CartItem.Clear();
+                                dbCtx.SaveChanges();
                                 dbCart.CartItem = sessionCart.CartItem; //TODO: merge carts
                                 dbCtx.SaveChanges();
                             }

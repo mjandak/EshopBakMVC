@@ -49,7 +49,7 @@ namespace EshopMVC.Controllers
             //}
 
             var cart2 = Cart.GetInstatnce();
-            if (cart2.Items.Count() == 0)
+            if (!cart2.Items.Any())
             {
                 return View("Empty");
             }

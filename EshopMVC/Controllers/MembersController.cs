@@ -1,4 +1,5 @@
-﻿using EshopMVC.Models;
+﻿using EshopMVC.DAL;
+using EshopMVC.Models;
 using EshopMVC.Models.Members;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -72,41 +73,44 @@ namespace EshopMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UserManager.Find(model.UserName, model.Password);
-                if (user != null)
-                {
-                    SignInAsync(user, false);
-                    //RedirectToAction("Home", "Index");
-                    //return RedirectToLocal(returnUrl);
+                //var user = UserManager.Find(model.UserName, model.Password);
+                //if (user != null)
+                //{
+                //    SignInAsync(user, false);
+                //    //RedirectToAction("Home", "Index");
+                //    //return RedirectToLocal(returnUrl);
 
-                    var sessionCart = (ShoppingCart)Session["Cart"];
-                    if (sessionCart != null)
-                    {
-                        using (var dbCtx = new DB_9FCCB1_eshopEntities())
-                        {
-                            var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-                            if (dbCart == null)
-                            {
-                                dbCtx.ShoppingCart.Add(sessionCart);
-                                dbCtx.SaveChanges();
-                            }
-                            else
-                            {
-                                dbCart.CartProduct.Clear();
-                                dbCtx.SaveChanges();
-                                dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
-                                dbCtx.SaveChanges();
-                            }
-                        }
-                    }
-                    Session.Remove("Cart");
+                //    var sessionCart = (ShoppingCart)Session["Cart"];
+                //    if (sessionCart != null)
+                //    {
+                //        using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                //        {
+                //            var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                //            if (dbCart == null)
+                //            {
+                //                dbCtx.ShoppingCart.Add(sessionCart);
+                //                dbCtx.SaveChanges();
+                //            }
+                //            else
+                //            {
+                //                dbCart.CartProduct.Clear();
+                //                dbCtx.SaveChanges();
+                //                dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
+                //                dbCtx.SaveChanges();
+                //            }
+                //        }
+                //    }
+                //    Session.Remove("Cart");
+
+                var user = new AppUser();
+                user.SignIn(model.UserName, model.Password);
 
                     return PartialView("_LoggedIn");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Invalid username or password.");
-                }
+                //}
+                //else
+                //{
+                //    ModelState.AddModelError("", "Invalid username or password.");
+                //}
             }
 
             //return RedirectToLocal(ReturnUrl);

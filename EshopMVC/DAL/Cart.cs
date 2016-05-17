@@ -33,14 +33,14 @@ namespace EshopMVC.DAL
         public abstract void Empty();
     }
 
+    public class CartItemInfo
+    {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
+    }
+
     public class SessionCart : Cart
     {
-        public class CartItemInfo
-        {
-            public int Id { get; set; }
-            public int Quantity { get; set; }
-        }
-
         List<CartItemInfo> _itemsInfo = new List<CartItemInfo>();
 
         List<CartItem> _items = new List<CartItem>();
@@ -102,15 +102,46 @@ namespace EshopMVC.DAL
 
         private ShoppingCart _cart;
 
+        List<CartProduct> _itemsInfo = new List<CartProduct>();
+
         public override IEnumerable<CartItem> Items
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                return _cart.CartProduct.Select(cp => new CartItem
+                {
+                    ProductId = cp.ProductId, 
+                    Quantity = cp.Quantity, 
+                    Price = cp.Product.price, 
+                    Title = cp.Product.title
+                }).ToArray();
+            }
         }
 
-        public DbCart()
+        public DbCart(string UserName)
         {
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
 
+            using (var dbCtx = new DB_9FCCB1_eshopEntities())
+            {
+                ApplicationUser user = UserManager.FindByName(UserName);
+                _cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+            }
+        }
+
+        public override void AddItem(int id, int quantity)
+        {
+            var sameItem = _cart.CartProduct.FirstOrDefault(i => i.ProductId == id);
+            if (sameItem == null)
+            {
+                _cart.CartProduct.Add(new CartProduct { ProductId = id, Quantity = quantity });
+                return;
+            }
+            sameItem.Quantity += quantity;
+        }
+
+        public override void Save()
+        {
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
                 ApplicationUser user = UserManager.FindByName(HttpContext.Current.User.Identity.Name);
@@ -118,19 +149,9 @@ namespace EshopMVC.DAL
             }
         }
 
-        public override void AddItem(int id, int quantity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Save()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Empty()
         {
-            throw new NotImplementedException();
+            _itemsInfo.Clear();
         }
     }
 }

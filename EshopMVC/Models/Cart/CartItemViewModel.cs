@@ -9,6 +9,15 @@ namespace EshopMVC.Models.Cart
     {
         public CartItemViewModel()
         {
+
+        }
+
+        public CartItemViewModel(Product product, int quantity)
+        {
+            ProductId = product.id;
+            Title = product.title;
+            Price = product.price;
+            Quantity = quantity;
         }
 
         public CartItemViewModel(CartProduct cartItem)

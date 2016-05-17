@@ -14,7 +14,7 @@
     <RootNamespace>EshopMVC</RootNamespace>
     <AssemblyName>EshopMVC</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -197,6 +197,9 @@
     <Compile Include="Controllers\OrderController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DAL\AppUser.cs" />
+    <Compile Include="DAL\Cart.cs" />
+    <Compile Include="DAL\CartItem.cs" />
     <Compile Include="EntityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -288,7 +291,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57747</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/EshopMVC</IISUrl>
+          <IISUrl>http://localhost:57747/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

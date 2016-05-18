@@ -44,32 +44,40 @@ namespace EshopMVC.DAL
                 var sessionCart = (SessionCart) HttpContext.Current.Session["Cart"];
                 if (sessionCart != null)
                 {
-                    using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                    var dbCart = new DbCart(user.UserName);
+                    dbCart.Empty();
+                    foreach (CartItem item in sessionCart.Items)
                     {
-                        var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-                        if (dbCart == null)
-                        {
-                            var dbCartWrapper = new DbCart(user.UserName);
-                            foreach (CartItem item in sessionCart.Items)
-                            {
-                                dbCartWrapper.AddItem(item.ProductId, item.Quantity);
-                            }
-
-                            var x = dbCartWrapper.Items;
-
-                            //dbCartWrapper.Save();
-
-                            //dbCtx.ShoppingCart.Add(sessionCart);
-                            //dbCtx.SaveChanges();
-                        }
-                        else
-                        {
-                            dbCart.CartProduct.Clear();
-                            dbCtx.SaveChanges();
-                            // dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
-                            dbCtx.SaveChanges();
-                        }
+                        dbCart.AddItem(item.ProductId, item.Quantity);
                     }
+                    dbCart.Save();
+
+                    //using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                    //{
+                    //    var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                    //    if (dbCart == null)
+                    //    {
+                    //        var dbCartWrapper = new DbCart(user.UserName);
+                    //        foreach (CartItem item in sessionCart.Items)
+                    //        {
+                    //            dbCartWrapper.AddItem(item.ProductId, item.Quantity);
+                    //        }
+
+                    //        var x = dbCartWrapper.Items;
+
+                    //        //dbCartWrapper.Save();
+
+                    //        //dbCtx.ShoppingCart.Add(sessionCart);
+                    //        //dbCtx.SaveChanges();
+                    //    }
+                    //    else
+                    //    {
+                    //        dbCart.CartProduct.Clear();
+                    //        dbCtx.SaveChanges();
+                    //        // dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
+                    //        dbCtx.SaveChanges();
+                    //    }
+                    //}
                 }
                 HttpContext.Current.Session.Remove("Cart");
             }

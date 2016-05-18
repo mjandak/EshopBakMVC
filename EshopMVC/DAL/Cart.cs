@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace EshopMVC.DAL
 {
@@ -16,7 +19,7 @@ namespace EshopMVC.DAL
         {
             if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                return new DbCart();
+                return new DbCart(HttpContext.Current.User.Identity.Name);
             }
             var cart = (SessionCart)HttpContext.Current.Session["Cart"];
             if (cart == null)
@@ -98,16 +101,36 @@ namespace EshopMVC.DAL
 
     public class DbCart : Cart
     {
+        private bool _modified;
+
         public UserManager<ApplicationUser> UserManager { get; private set; }
 
         private ShoppingCart _cart;
 
-        List<CartProduct> _itemsInfo = new List<CartProduct>();
+        //List<CartProduct> _itemsInfo = new List<CartProduct>();
 
         public override IEnumerable<CartItem> Items
         {
             get
             {
+                var ids = _cart.CartProduct.Select(i => i.ProductId).ToArray();
+                using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                {
+                    var cartItems = dbCtx.Product
+                                       .Where(p => ids.Contains(p.id))
+                                       .ToArray()
+                                       .Select(
+                                           p => new CartItem()
+                                           {
+                                               Price = p.price,
+                                               ProductId = p.id,
+                                               Quantity = _cart.CartProduct.First(i => i.ProductId == p.id).Quantity,
+                                               Title = p.title
+                                           }
+                                       ).ToArray();
+                    return cartItems;
+                }
+
                 return _cart.CartProduct.Select(cp => new CartItem
                 {
                     ProductId = cp.ProductId, 
@@ -121,11 +144,22 @@ namespace EshopMVC.DAL
         public DbCart(string UserName)
         {
             UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            ApplicationUser user = UserManager.FindByName(UserName);
 
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
-            {
-                ApplicationUser user = UserManager.FindByName(UserName);
-                _cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+            {    
+                _cart = dbCtx.ShoppingCart
+                    .Where(c => c.UserId == user.Id)
+                    .Include(c => c.CartProduct)
+                    .FirstOrDefault(c => c.UserId == user.Id);
+
+                if (_cart == null)
+                {
+                    _cart = new ShoppingCart();
+                    _cart.UserId = user.Id;
+                    dbCtx.ShoppingCart.Add(_cart);
+                    dbCtx.SaveChanges();
+                }
             }
         }
 
@@ -134,7 +168,13 @@ namespace EshopMVC.DAL
             var sameItem = _cart.CartProduct.FirstOrDefault(i => i.ProductId == id);
             if (sameItem == null)
             {
-                _cart.CartProduct.Add(new CartProduct { ProductId = id, Quantity = quantity });
+                _cart.CartProduct.Add(
+                    new CartProduct 
+                    {
+                        CartId = _cart.Id,
+                        ProductId = id, 
+                        Quantity = quantity 
+                    });
                 return;
             }
             sameItem.Quantity += quantity;
@@ -144,14 +184,27 @@ namespace EshopMVC.DAL
         {
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
-                ApplicationUser user = UserManager.FindByName(HttpContext.Current.User.Identity.Name);
-                _cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
+                //dbCtx.CartProduct.Where(cp => cp.CartId == _cart.Id).
+                //var deleteCartProduct = new CartProduct() { CartId = _cart.Id };
+                //dbCtx.CartProduct.Attach(deleteCartProduct);
+                //dbCtx.CartProduct.delete
+                var cartProducts = dbCtx.ShoppingCart.First(c => c.Id == _cart.Id).CartProduct;
+                cartProducts.Clear();
+                dbCtx.SaveChanges();
+
+
+                foreach (var item in _cart.CartProduct)
+                {
+                    cartProducts.Add(item);
+                }
+                dbCtx.SaveChanges();
             }
         }
 
         public override void Empty()
         {
-            _itemsInfo.Clear();
+            //_itemsInfo.Clear();
+            _cart.CartProduct.Clear();
         }
     }
 }

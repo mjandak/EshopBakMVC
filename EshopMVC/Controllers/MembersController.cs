@@ -104,8 +104,7 @@ namespace EshopMVC.Controllers
 
                 var user = new AppUser();
                 user.SignIn(model.UserName, model.Password);
-
-                    return PartialView("_LoggedIn");
+                return PartialView("_LoggedIn");
                 //}
                 //else
                 //{

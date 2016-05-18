@@ -102,8 +102,7 @@ namespace EshopMVC.Controllers
                 //    }
                 //    Session.Remove("Cart");
 
-                var user = new AppUser();
-                user.SignIn(model.UserName, model.Password);
+                AppUser.SignIn(model.UserName, model.Password);
                 return PartialView("_LoggedIn");
                 //}
                 //else

@@ -12,78 +12,62 @@ namespace EshopMVC.DAL
 {
     public class AppUser
     {
-        private IAuthenticationManager AuthenticationManager
+        private static IAuthenticationManager AuthenticationManager
         {
             get { return HttpContext.Current.GetOwinContext().Authentication; }
         }
 
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-
-        private object _cart;
-
-        public object Cart
+        private static UserManager<ApplicationUser> UserManager
         {
-            get { return _cart; }
-            set { _cart = value; }
+            get
+            {
+                return new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            }
         }
 
-        public AppUser()
+        //private object _cart;
+
+        //public object Cart
+        //{
+        //    get { return _cart; }
+        //    set { _cart = value; }
+        //}
+
+        private static string _userName;
+
+        public static string UserName
         {
-            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            get
+            {
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    return HttpContext.Current.User.Identity.Name;
+                }
+                return _userName;
+            }
         }
 
-        public void SignIn(string UserName, string Password)
+        public static void SignIn(string userName, string Password)
         {
-            var user = UserManager.Find(UserName, Password);
+            var user = UserManager.Find(userName, Password);
             if (user != null)
             {
                 SignInAsync(user, false);
-                //RedirectToAction("Home", "Index");
-                //return RedirectToLocal(returnUrl);
-
                 var sessionCart = (SessionCart) HttpContext.Current.Session["Cart"];
                 if (sessionCart != null)
                 {
                     var dbCart = new DbCart(user.UserName);
                     dbCart.Empty();
-                    foreach (CartItem item in sessionCart.Items)
+                    foreach (CartItem item in sessionCart.LoadItems())
                     {
                         dbCart.AddItem(item.ProductId, item.Quantity);
                     }
-                    dbCart.Save();
-
-                    //using (var dbCtx = new DB_9FCCB1_eshopEntities())
-                    //{
-                    //    var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-                    //    if (dbCart == null)
-                    //    {
-                    //        var dbCartWrapper = new DbCart(user.UserName);
-                    //        foreach (CartItem item in sessionCart.Items)
-                    //        {
-                    //            dbCartWrapper.AddItem(item.ProductId, item.Quantity);
-                    //        }
-
-                    //        var x = dbCartWrapper.Items;
-
-                    //        //dbCartWrapper.Save();
-
-                    //        //dbCtx.ShoppingCart.Add(sessionCart);
-                    //        //dbCtx.SaveChanges();
-                    //    }
-                    //    else
-                    //    {
-                    //        dbCart.CartProduct.Clear();
-                    //        dbCtx.SaveChanges();
-                    //        // dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
-                    //        dbCtx.SaveChanges();
-                    //    }
-                    //}
                 }
                 HttpContext.Current.Session.Remove("Cart");
             }
         }
 
-        private void SignInAsync(ApplicationUser user, bool isPersistent)
+        private static void SignInAsync(ApplicationUser user, bool isPersistent) //todo: async?
         {
             //The key methods are SignIn() and SignOut() on the AuthenticationManager, which create or delete the application cookies on the executing request. 
             //SignIn() takes an Identity object that includes any claims you have assigned to it. 
@@ -91,11 +75,10 @@ namespace EshopMVC.DAL
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() {IsPersistent = isPersistent}, identity);
-            //if (identity.IsAuthenticated)
-            //{
-            //    ViewBag.UserName = identity.Name;
-            //}
-
+            if (identity.IsAuthenticated)
+            {
+                _userName = identity.Name;
+            }
         }
     }
 }

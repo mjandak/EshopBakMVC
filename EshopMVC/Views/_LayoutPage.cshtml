@@ -29,7 +29,6 @@
             <aside id="pageAside">
                 @if (Request.IsAuthenticated)
                 {
-                    ViewBag.UserName = User.Identity.Name;
                     Html.RenderPartial("_LoggedIn");
                 }
                 else

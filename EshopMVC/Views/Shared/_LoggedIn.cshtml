@@ -1,7 +1,7 @@
-﻿<div class="commonRect" style="text-align:center">You are logged in as <br />
+﻿@using EshopMVC.DAL
+<div class="commonRect" style="text-align:center">You are logged in as <br />
     <b>
-        @*@User.Identity.Name*@
-        @ViewBag.UserName
+        @AppUser.UserName
     </b>
 </div>
 <br/>

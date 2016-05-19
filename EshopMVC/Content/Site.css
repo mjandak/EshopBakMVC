@@ -36,10 +36,10 @@ a {
 }
 
 #contentContainer {
-    margin: 0px;
+    margin: 0;
     /*padding-top: 10px;*/
     /*padding-bottom: 20px;*/
-    min-height: 500px;
+    min-height: 780px;
 }
 
     #contentContainer > nav, section, aside {

@@ -1,4 +1,5 @@
-﻿using EshopMVC.Models;
+﻿using EshopMVC.Controllers.Cart;
+using EshopMVC.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace EshopMVC.DAL
+namespace EshopMVC
 {
     public class AppUser
     {
@@ -47,14 +48,28 @@ namespace EshopMVC.DAL
             }
         }
 
-        public static void SignIn(string userName, string Password)
+        public static bool SignIn(string userName, string Password)
         {
             var user = UserManager.Find(userName, Password);
             if (user != null)
             {
                 SignInAsync(user, false);
+
+                using (var dbCtx = new DB_9FCCB1_eshopEntities())
+                {
+                    if (dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id) == null)
+                    {
+                        dbCtx.ShoppingCart.Add(
+                            new ShoppingCart
+                            {
+                                UserId = user.Id
+                            });
+                        dbCtx.SaveChanges();
+                    }
+                }
+
                 var sessionCart = (SessionCart) HttpContext.Current.Session["Cart"];
-                if (sessionCart != null)
+                if (sessionCart != null) //todo: merge carts, or allow multiple carts for user?
                 {
                     var dbCart = new DbCart(user.UserName);
                     dbCart.Empty();
@@ -64,21 +79,24 @@ namespace EshopMVC.DAL
                     }
                 }
                 HttpContext.Current.Session.Remove("Cart");
+                return true;
             }
+            return false;
         }
 
         private static void SignInAsync(ApplicationUser user, bool isPersistent) //todo: async?
         {
+            //info:
             //The key methods are SignIn() and SignOut() on the AuthenticationManager, which create or delete the application cookies on the executing request. 
             //SignIn() takes an Identity object that includes any claims you have assigned to it. 
             //This identity is what you also get back once the user is logged in and you look at Context.User.Identity later to check for authorization.
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
             var identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
             AuthenticationManager.SignIn(new AuthenticationProperties() {IsPersistent = isPersistent}, identity);
-            if (identity.IsAuthenticated)
-            {
-                _userName = identity.Name;
-            }
+            //if (identity.IsAuthenticated)
+            //{
+            //    _userName = identity.Name;
+            //}
         }
     }
 }

@@ -14,7 +14,7 @@ namespace EshopMVC.Controllers
         MostExpensive
     }
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly DB_9FCCB1_eshopEntities _db = new DB_9FCCB1_eshopEntities();
 

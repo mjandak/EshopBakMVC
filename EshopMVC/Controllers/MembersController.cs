@@ -1,5 +1,4 @@
-﻿using EshopMVC.DAL;
-using EshopMVC.Models;
+﻿using EshopMVC.Models;
 using EshopMVC.Models.Members;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -69,50 +68,17 @@ namespace EshopMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model /*, string ReturnUrl*/)
+        public ActionResult Login(LoginViewModel model, string ReturnUrl)
         {
             if (ModelState.IsValid)
-            {
-                //var user = UserManager.Find(model.UserName, model.Password);
-                //if (user != null)
-                //{
-                //    SignInAsync(user, false);
-                //    //RedirectToAction("Home", "Index");
-                //    //return RedirectToLocal(returnUrl);
-
-                //    var sessionCart = (ShoppingCart)Session["Cart"];
-                //    if (sessionCart != null)
-                //    {
-                //        using (var dbCtx = new DB_9FCCB1_eshopEntities())
-                //        {
-                //            var dbCart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-                //            if (dbCart == null)
-                //            {
-                //                dbCtx.ShoppingCart.Add(sessionCart);
-                //                dbCtx.SaveChanges();
-                //            }
-                //            else
-                //            {
-                //                dbCart.CartProduct.Clear();
-                //                dbCtx.SaveChanges();
-                //                dbCart.CartProduct = sessionCart.CartProduct; //TODO: merge carts
-                //                dbCtx.SaveChanges();
-                //            }
-                //        }
-                //    }
-                //    Session.Remove("Cart");
-
-                AppUser.SignIn(model.UserName, model.Password);
-                return PartialView("_LoggedIn");
-                //}
-                //else
-                //{
-                //    ModelState.AddModelError("", "Invalid username or password.");
-                //}
+            {                
+                if (!AppUser.SignIn(model.UserName, model.Password))
+                {
+                    ModelState.AddModelError("", "Invalid username or password.");
+                    TempData["ModelState"] = ModelState;
+                }
             }
-
-            //return RedirectToLocal(ReturnUrl);
-            return PartialView("_Login", model);
+            return RedirectToLocal(ReturnUrl);
         }
 
         public ActionResult LogOut()
@@ -144,16 +110,16 @@ namespace EshopMVC.Controllers
             }
         }
 
-        //private ActionResult RedirectToLocal(string returnUrl)
-        //{
-        //    if (Url.IsLocalUrl(returnUrl))
-        //    {
-        //        return Redirect(returnUrl);
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
 	}
 }

@@ -9,9 +9,9 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 
-namespace EshopMVC.DAL
+namespace EshopMVC.Controllers.Cart
 {
-    public abstract class Cart
+    public abstract class CartStrategy
     {
         public abstract CartItem[] LoadItems();
 
@@ -20,14 +20,14 @@ namespace EshopMVC.DAL
         public abstract void Empty();
     }
 
-    public class CartItemInfo
+    public class SessionCart : CartStrategy
     {
-        public int Id { get; set; }
-        public int Quantity { get; set; }
-    }
+        public class CartItemInfo
+        {
+            public int Id { get; set; }
+            public int Quantity { get; set; }
+        }
 
-    public class SessionCart : Cart
-    {
         List<CartItemInfo> _itemsInfo = new List<CartItemInfo>();
 
         List<CartItem> _items = new List<CartItem>();
@@ -71,62 +71,55 @@ namespace EshopMVC.DAL
         }
     }
 
-    public class DbCart : Cart
+    public class DbCart : CartStrategy
     {
-        public UserManager<ApplicationUser> UserManager { get; private set; }
-
-        private ShoppingCart _cart;
+        private string _userId;
 
         public override CartItem[] LoadItems()
         {
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
-                dbCtx.ShoppingCart.Attach(_cart);
-                var products = dbCtx
-                    .CartProduct
-                    .Select(cp => cp.Product).ToArray();
-                var cartItems = products
+                var cart = dbCtx
+                    .ShoppingCart.Where(c => c.UserId == _userId)
+                    .Include(c => c.CartProduct.Select(cp => cp.Product))
+                    .First();
+                var cartItems = cart.CartProduct
                     .Select(
-                        p => new CartItem
+                        cp => new CartItem
                         {
-                            Price = p.price,
-                            ProductId = p.id,
-                            Quantity = _cart.CartProduct.First(i => i.ProductId == p.id).Quantity,
-                            Title = p.title
+                            Price = cp.Product.price,
+                            ProductId = cp.ProductId,
+                            Quantity = cp.Quantity,
+                            Title = cp.Product.title
                         }
                     ).ToArray();
                 return cartItems;
             }
         }
 
+        /// <summary>
+        /// Creates a new cart in db, if the user doesn't have one already. 
+        /// </summary>
+        /// <param name="UserName"></param>
         public DbCart(string UserName)
         {
-            UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
             ApplicationUser user = UserManager.FindByName(UserName);
-            using (var dbCtx = new DB_9FCCB1_eshopEntities())
-            {
-                _cart = dbCtx.ShoppingCart.FirstOrDefault(c => c.UserId == user.Id);
-
-                if (_cart != null) return;
-                _cart = new ShoppingCart();
-                _cart.UserId = user.Id;
-                dbCtx.ShoppingCart.Add(_cart);
-                dbCtx.SaveChanges();
-            }
+            _userId = user.Id;
         }
 
         public override void AddItem(int id, int quantity)
         {
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
-                dbCtx.ShoppingCart.Attach(_cart);
-                var sameItem = _cart.CartProduct.FirstOrDefault(i => i.ProductId == id);
+                var cart = dbCtx.ShoppingCart.First(c => c.UserId == _userId);
+                var sameItem = cart.CartProduct.FirstOrDefault(i => i.ProductId == id);
                 if (sameItem == null)
                 {
-                    _cart.CartProduct.Add(
+                    cart.CartProduct.Add(
                         new CartProduct
                         {
-                            CartId = _cart.Id,
+                            //CartId = _cart.Id,
                             ProductId = id,
                             Quantity = quantity
                         });
@@ -143,8 +136,7 @@ namespace EshopMVC.DAL
         {
             using (var dbCtx = new DB_9FCCB1_eshopEntities())
             {
-                dbCtx.ShoppingCart.Attach(_cart);
-                _cart.CartProduct.Clear();
+                dbCtx.ShoppingCart.First(c => c.UserId == _userId).CartProduct.Clear();
                 dbCtx.SaveChanges();
             }
         }

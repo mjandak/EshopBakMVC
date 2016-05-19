@@ -1,7 +1,7 @@
-﻿@using EshopMVC.DAL
-<div class="commonRect" style="text-align:center">You are logged in as <br />
+﻿<div class="commonRect" style="text-align:center">You are logged in as <br />
     <b>
-        @AppUser.UserName
+        @*@AppUser.UserName*@
+        @HttpContext.Current.User.Identity.Name
     </b>
 </div>
 <br/>

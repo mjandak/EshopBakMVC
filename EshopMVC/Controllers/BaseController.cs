@@ -17,5 +17,15 @@ namespace EshopMVC.Controllers
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            //todo: see http://stackoverflow.com/questions/658747/how-do-i-maintain-modelstate-errors-when-using-redirecttoaction
+            //preserve login error message after redirect
+            if (TempData["ModelState"] != null && !ModelState.Equals(TempData["ModelState"]))
+                ModelState.Merge((ModelStateDictionary)TempData["ModelState"]);
+
+            base.OnActionExecuted(filterContext);
+        }
 	}
 }

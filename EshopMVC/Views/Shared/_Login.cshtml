@@ -1,7 +1,7 @@
 ﻿@model EshopMVC.Models.Members.LoginViewModel
 <div id="loginContainer">
-    @using (Ajax.BeginForm("Login", "Members", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "loginContainer" }))
-    //using (Html.BeginForm("Login", "Users", new { ReturnUrl = Request.Url.PathAndQuery }, FormMethod.Post))
+    @using (Html.BeginForm("Login", "Members", new { ReturnUrl = Request.Url.PathAndQuery }, FormMethod.Post))
+    //using (Ajax.BeginForm("Login", "Members", new AjaxOptions { HttpMethod = "Post", InsertionMode = InsertionMode.Replace, UpdateTargetId = "loginContainer" }))
     {
         @Html.AntiForgeryToken()
         <div class="commonRect">
@@ -31,7 +31,6 @@
                     <tr>
                         <td style="color: red" colspan="2">
                             @Html.ValidationSummary()
-                            @*@{Html.RenderAction("Login", "Users");}*@
                         </td>
                     </tr>
                     <tr>
@@ -42,15 +41,6 @@
                 </tbody>
             </table>
         </div>
-@*<table style="width: 100%; border-collapse: collapse;">
-            <tbody>
-                <tr>
-                    <td>
-                        
-                    </td>
-                </tr>
-            </tbody>
-        </table>*@
 
     }
     <br />

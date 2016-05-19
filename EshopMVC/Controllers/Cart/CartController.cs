@@ -16,6 +16,7 @@ namespace EshopMVC.Controllers.Cart
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
+            //info:
             //HttpContext is not available in the controller constructor
             //You could override the Initialize method where it will be accessible
             base.Initialize(requestContext);
